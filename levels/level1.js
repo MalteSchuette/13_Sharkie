@@ -3,7 +3,8 @@ const level1 =  new Level(
     new LilaJelly(),
     new YellowJelly(),
     new GreenJelly(),
-    new PinkJelly()
+    new PinkJelly(),
+    new Endboss()
     ],
     [
         new BackgroundObject('assets/img/3. Background/Layers/5. Water/D2.png', -720),
