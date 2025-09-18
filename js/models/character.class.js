@@ -22,10 +22,11 @@ currentImage = 0;
 
     animate(){
         setInterval(() => {
-        let path = this.IMAGES_SWIM[this.currentImage];
+        let i = this.currentImage % this.IMAGES_SWIM.length;
+        let path = this.IMAGES_SWIM[i];
         this.img = this.imageCache[path];
         this.currentImage++;
-        }, 1000);
+        }, 160);
     }
     
 }
