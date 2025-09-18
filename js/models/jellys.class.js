@@ -3,22 +3,14 @@
 
 
 class LilaJelly extends MoveableObject{
-    
     width = 80;
     lila_direction;
-    yellow_direction;
-    green_direction;
-    pink_direction;
-
-
     IMAGES_SWIM = [
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png',
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 3.png',
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png'
         ];
-    currentImage = 0;
-
 
     constructor() {
         super().loadImage('assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png')
@@ -32,7 +24,7 @@ class LilaJelly extends MoveableObject{
 
     movement() {
         setInterval(() => {
-        this.x -= 1;
+        this.x -= 4 * Math.random();
         if (this.lila_direction == "up") {
             this.y -=1;
             if (this.y <= -25) {
@@ -59,7 +51,7 @@ class LilaJelly extends MoveableObject{
 }
 
 class YellowJelly extends MoveableObject{
-    
+    yellow_direction;
     width = 80;
     IMAGES_SWIM = [
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png',
@@ -67,7 +59,6 @@ class YellowJelly extends MoveableObject{
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 3.png',
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png'
         ];
-    currentImage = 0;
 
     constructor() {
         super().loadImage('assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png')
@@ -81,7 +72,7 @@ class YellowJelly extends MoveableObject{
 
     movement() {
         setInterval(() => {
-        this.x -= 1;
+        this.x -= 4 * Math.random();
         if (this.yellow_direction == "up") {
             this.y -=1;
             if (this.y <= -25) {
@@ -108,7 +99,7 @@ class YellowJelly extends MoveableObject{
 }
 
 class GreenJelly extends MoveableObject{
-    
+    green_direction;
     width = 80;
     IMAGES_SWIM = [
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 1.png',
@@ -116,7 +107,6 @@ class GreenJelly extends MoveableObject{
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 3.png',
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 4.png'
         ];
-    currentImage = 0;
 
     constructor() {
         super().loadImage('assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 1.png')
@@ -130,18 +120,12 @@ class GreenJelly extends MoveableObject{
 
     movement() {
         setInterval(() => {
-        this.x -= 1;
-        if (this.green_direction == "up") {
-            this.y -=1;
-            if (this.y <= -25) {
-                this.green_direction = "down"
+        this.x -= 4 * Math.random();
+        if (world.character.y < this.y) {
+            this.y -=3;
             }
-        }
-        else if (this.green_direction == "down") {
-            this.y += 1;
-            if (this.y >= 350) {
-                this.green_direction = "up"
-            } 
+        else if (world.character.y > this.y) {
+            this.y += 3;
         }
         },1000 / 60);
     }
@@ -156,8 +140,9 @@ class GreenJelly extends MoveableObject{
     }
 }
 
+
 class PinkJelly extends MoveableObject{
-    
+    pink_direction;
     width = 80;
 
     IMAGES_SWIM = [
@@ -166,7 +151,6 @@ class PinkJelly extends MoveableObject{
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 3.png',
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 4.png'
         ];
-    currentImage = 0;
 
     constructor() {
         super().loadImage('assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png')
@@ -180,18 +164,12 @@ class PinkJelly extends MoveableObject{
 
     movement() {
         setInterval(() => {
-        this.x -= 1;
-        if (this.pink_direction == "up") {
-            this.y -=1;
-            if (this.y <= -25) {
-                this.pink_direction = "down"
+        this.x -= 4 * Math.random();
+        if (world.character.y < this.y) {
+            this.y -=3;
             }
-        }
-        else if (this.pink_direction == "down") {
-            this.y += 1;
-            if (this.y >= 350) {
-                this.pink_direction = "up"
-            } 
+        else if (world.character.y > this.y) {
+            this.y += 3;
         }
         },1000 / 60);
     }
