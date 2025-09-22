@@ -77,6 +77,9 @@ world;
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_POISON_DEAD)
             }
+            else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT_POISON)
+            }
             else {
             this.playAnimation(this.IMAGES_SWIM)
             }
