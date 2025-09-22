@@ -8,11 +8,37 @@ IMAGES_SWIM = [
             'assets/img/1.Sharkie/3.Swim/5.png',
             'assets/img/1.Sharkie/3.Swim/6.png'
         ];
+
+IMAGES_HURT_POISON = [
+            'assets/img/1.Sharkie/5.Hurt/1.Poisoned/1.png',
+            'assets/img/1.Sharkie/5.Hurt/1.Poisoned/2.png',
+            'assets/img/1.Sharkie/5.Hurt/1.Poisoned/3.png',
+            'assets/img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
+            'assets/img/1.Sharkie/5.Hurt/1.Poisoned/5.png',
+        ]
+
+IMAGES_DEAD_POISON = [
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/1.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/2.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/3.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/4.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/5.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/6.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/7.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/8.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/9.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/10.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/11.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/12.png'
+        ]
+
 world;
 
     constructor() {
         super().loadImage('assets/img/1.Sharkie/1.IDLE/1.png');
         this.loadImages(this.IMAGES_SWIM);
+        this.loadImages(this.IMAGES_HURT_POISON);
+        this.loadImages(this.IMAGES_DEAD_POISON);
         this.animate();
 
         this.x = 0;
@@ -42,20 +68,25 @@ world;
 
         setInterval(() => {
             if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                let i = this.currentImage % this.IMAGES_SWIM.length;
-                let path = this.IMAGES_SWIM[i];
-                this.img = this.imageCache[path];
-                this.currentImage++;
+                this.playAnimation(this.IMAGES_SWIM)
             }            
-            }, 100);
+        }, 100);
     
         // permanente, langsame Animation
         setInterval(() => {
-                let i = this.currentImage % this.IMAGES_SWIM.length;
-                let path = this.IMAGES_SWIM[i];
-                this.img = this.imageCache[path];
-                this.currentImage++;
-        }, 320);
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_POISON_DEAD)
+            }
+            else {
+            this.playAnimation(this.IMAGES_SWIM)
+            }
+        }, 200);
     }
     
+    playAnimation(array) {
+                let i = this.currentImage % array.length;
+                let path = array[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+    }
 }
