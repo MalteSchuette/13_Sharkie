@@ -75,7 +75,7 @@ world;
         // permanente, langsame Animation
         setInterval(() => {
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_POISON_DEAD)
+                this.playAnimation(this.IMAGES_DEAD_POISON)
             }
             else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT_POISON)
@@ -86,10 +86,5 @@ world;
         }, 200);
     }
     
-    playAnimation(array) {
-                let i = this.currentImage % array.length;
-                let path = array[i];
-                this.img = this.imageCache[path];
-                this.currentImage++;
-    }
+
 }

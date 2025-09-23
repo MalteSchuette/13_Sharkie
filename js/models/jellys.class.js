@@ -42,10 +42,7 @@ class LilaJelly extends MoveableObject{
 
     animate() {
         setInterval(() => {
-        let i = this.currentImage % this.IMAGES_SWIM.length;
-        let path = this.IMAGES_SWIM[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+        this.playAnimation(this.IMAGES_SWIM)
         }, 160);
     }
 }
@@ -90,10 +87,7 @@ class YellowJelly extends MoveableObject{
 
     animate() {
         setInterval(() => {
-        let i = this.currentImage % this.IMAGES_SWIM.length;
-        let path = this.IMAGES_SWIM[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+        this.playAnimation(this.IMAGES_SWIM)
         }, 160);
     }
 }
@@ -132,10 +126,7 @@ class GreenJelly extends MoveableObject{
 
     animate() {
         setInterval(() => {
-        let i = this.currentImage % this.IMAGES_SWIM.length;
-        let path = this.IMAGES_SWIM[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+        this.playAnimation(this.IMAGES_SWIM)
         }, 160);
     }
 }
@@ -176,10 +167,7 @@ class PinkJelly extends MoveableObject{
 
     animate() {
         setInterval(() => {
-        let i = this.currentImage % this.IMAGES_SWIM.length;
-        let path = this.IMAGES_SWIM[i];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+        this.playAnimation(this.IMAGES_SWIM)
         }, 160);
     }
 }
