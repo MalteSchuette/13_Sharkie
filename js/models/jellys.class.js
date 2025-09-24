@@ -5,6 +5,7 @@
 class LilaJelly extends MoveableObject{
     width = 80;
     lila_direction;
+    world;
     IMAGES_SWIM = [
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png',
@@ -50,6 +51,7 @@ class LilaJelly extends MoveableObject{
 class YellowJelly extends MoveableObject{
     yellow_direction;
     width = 80;
+    world;
     IMAGES_SWIM = [
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png',
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 2.png',
@@ -93,6 +95,7 @@ class YellowJelly extends MoveableObject{
 }
 
 class GreenJelly extends MoveableObject{
+    world;
     green_direction;
     width = 80;
     IMAGES_SWIM = [
@@ -133,6 +136,7 @@ class GreenJelly extends MoveableObject{
 
 
 class PinkJelly extends MoveableObject{
+    world;
     pink_direction;
     width = 80;
 

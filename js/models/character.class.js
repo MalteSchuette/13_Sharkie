@@ -33,6 +33,7 @@ IMAGES_DEAD_POISON = [
         ]
 
 world;
+dead = false;
 
     constructor() {
         super().loadImage('assets/img/1.Sharkie/1.IDLE/1.png');
@@ -40,10 +41,9 @@ world;
         this.loadImages(this.IMAGES_HURT_POISON);
         this.loadImages(this.IMAGES_DEAD_POISON);
         this.animate();
-
         this.x = 0;
         this.y = 150;
-        
+        ;
     }
 
     animate(){
@@ -75,7 +75,12 @@ world;
         // permanente, langsame Animation
         setInterval(() => {
             if (this.isDead()) {
+                if (!this.dead) {
                 this.playAnimation(this.IMAGES_DEAD_POISON)
+                this.dead = true;
+                } else {
+                this.playAnimation([this.IMAGES_DEAD_POISON[10],this.IMAGES_DEAD_POISON[11]])
+                }
             }
             else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT_POISON)
@@ -83,7 +88,7 @@ world;
             else {
             this.playAnimation(this.IMAGES_SWIM)
             }
-        }, 200);
+        }, 300);
     }
     
 

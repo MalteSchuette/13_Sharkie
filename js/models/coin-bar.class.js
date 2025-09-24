@@ -1,4 +1,6 @@
 class CoinBar extends StatusBar {
+
+    
     constructor() {
         super([
         'assets/img/4. Marcadores/green/Coin/0_  copia 4.png',
