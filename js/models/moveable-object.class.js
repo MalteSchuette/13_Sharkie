@@ -41,10 +41,6 @@ class MoveableObject extends DrawableObject{
         return this.energy == 0
     }
 
-    moveRight() {
-        console.log('moving right')
-    }
-
     moveLeft() {
         setInterval(() =>{
             this.x -= this.speed;
