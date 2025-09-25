@@ -5,9 +5,14 @@ let keyboard = new Keyboard();
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
-
-    console.log('My Character is', world.character);
 }
+
+// function removeStartScreen() {
+//   console.log("removeStartScreen läuft!");
+//   const startScreen = document.getElementById("start_screen");
+//   startScreen.classList.add("d_none");
+//   console.log(startScreen.classList);
+// }
 
 window.addEventListener('keydown', (e) => {
 

@@ -1,11 +1,14 @@
-//max Y = -25 & 350, max X = -76 & 720
-
-
-
 class LilaJelly extends MoveableObject{
     width = 80;
     lila_direction;
     world;
+    offset = {
+        top: 10,
+        right:0,
+        bottom:15,
+        left:0
+    }
+
     IMAGES_SWIM = [
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png',
@@ -13,11 +16,11 @@ class LilaJelly extends MoveableObject{
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png'
         ];
 
-    constructor() {
+    constructor(x,y) {
         super().loadImage('assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png')
         this.loadImages(this.IMAGES_SWIM);
-        this.x = 720 + Math.random() * 200;
-        this.y = Math.random() * 350;
+        this.x = x
+        this.y = y
         this.lila_direction = Math.random() < 0.5 ? "up" : "down";
         this.movement();
         this.animate();
@@ -52,6 +55,12 @@ class YellowJelly extends MoveableObject{
     yellow_direction;
     width = 80;
     world;
+    offset = {
+        top: 10,
+        right:0,
+        bottom:15,
+        left:0
+    }
     IMAGES_SWIM = [
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png',
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 2.png',
@@ -98,6 +107,12 @@ class GreenJelly extends MoveableObject{
     world;
     green_direction;
     width = 80;
+    offset = {
+        top: 10,
+        right:0,
+        bottom:15,
+        left:0
+    }
     IMAGES_SWIM = [
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 1.png',
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 2.png',
@@ -139,6 +154,12 @@ class PinkJelly extends MoveableObject{
     world;
     pink_direction;
     width = 80;
+    offset = {
+        top: 10,
+        right:0,
+        bottom:15,
+        left:0
+    }
 
     IMAGES_SWIM = [
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png',

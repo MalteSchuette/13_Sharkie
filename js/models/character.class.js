@@ -34,6 +34,12 @@ IMAGES_DEAD_POISON = [
 
 world;
 dead = false;
+offset = {
+        top: 75,
+        right:35,
+        bottom:40,
+        left:35
+    }
 
     constructor() {
         super().loadImage('assets/img/1.Sharkie/1.IDLE/1.png');
