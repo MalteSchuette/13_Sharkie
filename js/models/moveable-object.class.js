@@ -9,10 +9,10 @@ class MoveableObject extends DrawableObject{
     
 
     isColliding(mo) {
-    return this.rX + this.rW > mo.rX &&
-           this.rY + this.rH > mo.rY &&
-           this.rX < mo.rX + mo.rW &&
-           this.rY < mo.rY + mo.rH;
+        return this.rX + this.rW > mo.rX &&
+            this.rY + this.rH > mo.rY &&
+            this.rX < mo.rX + mo.rW &&
+            this.rY < mo.rY + mo.rH;
     }
 
     hit() {

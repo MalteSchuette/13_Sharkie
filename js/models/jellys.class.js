@@ -68,11 +68,11 @@ class YellowJelly extends MoveableObject{
             'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png'
         ];
 
-    constructor() {
+    constructor(x, y) {
         super().loadImage('assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png')
         this.loadImages(this.IMAGES_SWIM);
-        this.x = 720 + Math.random() * 200;
-        this.y = Math.random() * 350;
+        this.x = x;
+        this.y = y;
         this.yellow_direction = Math.random() < 0.5 ? "up" : "down";
         this.movement();
         this.animate();
@@ -120,11 +120,11 @@ class GreenJelly extends MoveableObject{
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 4.png'
         ];
 
-    constructor() {
+    constructor(x, y) {
         super().loadImage('assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 1.png')
         this.loadImages(this.IMAGES_SWIM);
-        this.x = 720 + Math.random() * 200;
-        this.y = Math.random() * 350;
+        this.x = x;
+        this.y = y;
         this.green_direction = Math.random() < 0.5 ? "up" : "down";
         this.movement();
         this.animate();
@@ -168,11 +168,11 @@ class PinkJelly extends MoveableObject{
             'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 4.png'
         ];
 
-    constructor() {
+    constructor(x, y) {
         super().loadImage('assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png')
         this.loadImages(this.IMAGES_SWIM);
-        this.x = 720 + Math.random() * 200;
-        this.y = Math.random() * 350;
+        this.x = x;
+        this.y = y;
         this.pink_direction = Math.random() < 0.5 ? "up" : "down";
         this.movement();
         this.animate();

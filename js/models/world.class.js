@@ -17,6 +17,7 @@ class World {
         this.draw();
         this.setWorld();
         this.checkCollisions();
+        this.recoverPoison();
     }
 
     setWorld(){
@@ -30,13 +31,19 @@ class World {
     checkCollisions() {
         setInterval(() => {
             this.level.enemies.forEach( (enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    console.log(enemy);                    
+                if (this.character.isColliding(enemy)) {                    
                     this.character.hit();
                     this.lifeBar.setPercentage(this.character.energy);
                 }
             });
         }, 200);
+    }
+
+    recoverPoison() {
+        setInterval(() => {
+            this.character.setPoisonPercentage();
+            this.poisonBar.setPercentage(this.character.poison_percentage);
+        }, 3000);
     }
 
     draw() {

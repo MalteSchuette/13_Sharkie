@@ -32,8 +32,20 @@ IMAGES_DEAD_POISON = [
             'assets/img/1.Sharkie/6.dead/1.Poisoned/12.png'
         ]
 
+IMAGES_ATTACK = [
+    'assets/img/1.Sharkie/4.Attack/Bubble/op1_bubble/1.png',
+    'assets/img/1.Sharkie/4.Attack/Bubble/op1_bubble/2.png',
+    'assets/img/1.Sharkie/4.Attack/Bubble/op1_bubble/3.png',
+    'assets/img/1.Sharkie/4.Attack/Bubble/op1_bubble/4.png',
+    'assets/img/1.Sharkie/4.Attack/Bubble/op1_bubble/5.png',
+    'assets/img/1.Sharkie/4.Attack/Bubble/op1_bubble/6.png',
+    'assets/img/1.Sharkie/4.Attack/Bubble/op1_bubble/7.png',
+    'assets/img/1.Sharkie/4.Attack/Bubble/op1_bubble/8.png'
+]
+
 world;
 dead = false;
+poison_percentage = 0;
 offset = {
         top: 75,
         right:35,
@@ -46,14 +58,13 @@ offset = {
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_HURT_POISON);
         this.loadImages(this.IMAGES_DEAD_POISON);
+        this.loadImages(this.IMAGES_ATTACK)
         this.animate();
         this.x = 0;
         this.y = 150;
-        ;
     }
 
     animate(){
-
         setInterval(() => {
             if(this.world.keyboard.RIGHT && this.x < level1.level_end_x) {
                 this.x += 10;
@@ -75,7 +86,7 @@ offset = {
         setInterval(() => {
             if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.playAnimation(this.IMAGES_SWIM)
-            }            
+            }
         }, 100);
     
         // permanente, langsame Animation
@@ -95,7 +106,19 @@ offset = {
             this.playAnimation(this.IMAGES_SWIM)
             }
         }, 300);
+
+        setInterval(() => {
+            if(this.world.keyboard.SPACE) {
+                this.playAnimation(this.IMAGES_ATTACK);
+            }
+        }, 500);
     }
     
+    setPoisonPercentage() {
+            if (this.poison_percentage < 100){
+                this.poison_percentage += 20;
+                console.log(this.poison_percentage);
+            }
 
+    }
 }
