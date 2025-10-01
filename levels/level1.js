@@ -3,9 +3,9 @@ let level1;
 function initLevel() {
     level1 =  new Level(
         [
-        // new LilaJelly(750,250),
-        // new YellowJelly(1750, 400),
-        // new GreenJelly(750, 50),
+        new LilaJelly(750,250),
+        new YellowJelly(1750, 400),
+        new GreenJelly(750, 50),
         // new PinkJelly(1750, 200),
         // new GreenFish(1900,10),
         // new GreenFish(1900,80),
@@ -19,12 +19,12 @@ function initLevel() {
         // new OrangeFish(900,300),
         // new OrangeFish(900,370),
         // new OrangeFish(900,440),
-        // new PinkFish(2300,10),
-        // new PinkFish(2300,80),
-        // new PinkFish(2300,230),
-        // new PinkFish(2300,300),
-        // new PinkFish(2300,370),
-        // new PinkFish(2300,440),
+        new PinkFish(2300,10),
+        new PinkFish(2300,80),
+        new PinkFish(2300,230),
+        new PinkFish(2300,300),
+        new PinkFish(2300,370),
+        new PinkFish(2300,440),
         new Endboss()
         ],
         [

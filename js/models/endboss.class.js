@@ -10,27 +10,29 @@ class Endboss extends MoveableObject {
     }    
 
     IMAGES_SWIM = [
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/1.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/2.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/3.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/4.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/5.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/6.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/7.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/8.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/9.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/10.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/11.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/12.png',
-        'assets/img/2.Enemy/3 Final Enemy/2.floating/13.png'
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/1.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/2.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/3.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/4.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/5.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/6.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/7.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/8.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/9.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/10.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/11.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/12.png',
+        'assets/img/2.Enemy/3 Final_Enemy/2.floating/13.png'
     ];
 
     constructor(){
-        super().loadImage('assets/img/2.Enemy/3 Final Enemy/2.floating/1.png')
+        super().loadImage('assets/img/2.Enemy/3 Final_Enemy/2.floating/1.png');
         this.loadImages(this.IMAGES_SWIM);
-        this.x = 720*8
-        this.y = -150
-        this.animate()
+        // this.x = 720*8;
+        this.x = 720;
+        this.y = -150;
+        this.animate();
+        this.movement();
     }
 
 
@@ -41,5 +43,17 @@ class Endboss extends MoveableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
         }, 160);
+    }
+
+    movement() {
+        setInterval(() => {
+            this.x -= 4 * Math.random();
+            if (world.character.y < this.y + 250) {
+                this.y -=3;
+                }
+            else if (world.character.y > this.y) {
+                this.y += 3;
+            }
+        },1000 / 60);
     }
 }

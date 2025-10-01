@@ -1,5 +1,5 @@
 class World {
-    character = new Character()
+    character = new Character();
     level = level1;
     canvas;
     ctx;
@@ -8,7 +8,7 @@ class World {
     lifeBar = new LifeBar();
     coinBar = new CoinBar();
     poisonBar = new PoisonBar();
-
+    bubbles = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -16,7 +16,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
         this.recoverPoison();
     }
 
@@ -28,15 +28,42 @@ class World {
 
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach( (enemy) => {
-                if (this.character.isColliding(enemy)) {                    
-                    this.character.hit();
-                    this.lifeBar.setPercentage(this.character.energy);
+            this.checkCollisions();
+            this.checkBubbleAttack()    
+        }, 100);
+    }
+
+    checkCollisions() {
+        this.level.enemies.forEach(enemy => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.lifeBar.setPercentage(this.character.energy);
+            }
+
+            for (let i = this.bubbles.length - 1; i >= 0; i--) {
+                const bubble = this.bubbles[i];
+                if (!bubble) continue;
+                if (bubble.isColliding(enemy)) {
+                    enemy.hit_status = true;
+                    console.log('enemy hit:', enemy);
+                    this.bubbles.splice(i, 1);
+                    break;
                 }
-            });
-        }, 200);
+            }
+        });
+    }
+
+
+
+    checkBubbleAttack() {
+        if(this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead) {
+            let bubble = new Bubble(this.character.x, this.character.y);
+            this.character.poison_percentage -= 20;
+            this.poisonBar.setPercentage(this.character.poison_percentage)
+            this.bubbles.push(bubble);
+        }
     }
 
     recoverPoison() {
@@ -52,15 +79,18 @@ class World {
 
         this.addArrayToMap(this.level.backgroundObjects);
         
+
+        
+        this.addArrayToMap(this.level.enemies);
+        this.addToMap(this.character);
+        this.addArrayToMap(this.level.collectables)
+        this.addArrayToMap(this.bubbles)
+
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.lifeBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.poisonBar)
         this.ctx.translate(this.camera_x, 0);
-        
-        this.addArrayToMap(this.level.enemies);
-        this.addToMap(this.character);
-        this.addArrayToMap(this.level.collectables)
         
         this.ctx.translate(-this.camera_x, 0);
 

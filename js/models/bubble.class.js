@@ -1,17 +1,18 @@
 class Bubble extends MoveableObject {
+    width = 30;
+    height = 30;
+    IMAGE_SHOOT = 'assets/img/1.Sharkie/4.Attack/Bubble/Bubble.png'
 
-    IMAGE_SHOOT = 'assets/img/1.Sharkie/4.Attack/Bubble trap/Bubble.png'
-
-    constructor(){
-        super().loadImage('assets/img/1.Sharkie/4.Attack/Bubble trap/Bubble.png')
-        this.x = world.character.x;
-        this.y = world.character.y;
+    constructor(x, y){
+        super().loadImage('assets/img/1.Sharkie/4.Attack/Bubble/Bubble.png');
+        this.x = x + 150;   
+        this.y = y + 80;
         this.movement();
     }
 
     movement() {
         setInterval(() => {
-            this.x += 2;
+            this.x += 15;
         },1000 / 60);
     }
 }

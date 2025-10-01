@@ -66,25 +66,25 @@ offset = {
 
     animate(){
         setInterval(() => {
-            if(this.world.keyboard.RIGHT && this.x < level1.level_end_x) {
+            if(this.world.keyboard.RIGHT && this.x < level1.level_end_x && !this.dead) {
                 this.x += 10;
                 this.otherDirection = false;
             }
-            if(this.world.keyboard.LEFT && this.x > -100) {
+            if(this.world.keyboard.LEFT && this.x > -100 && !this.dead) {
                 this.x -= 10;
                 this.otherDirection = true;
             }
-            if(this.world.keyboard.DOWN && this.y < 360) {
+            if(this.world.keyboard.DOWN && this.y < 360 && !this.dead) {
                 this.y += 10;
             }
-            if(this.world.keyboard.UP && this.y > -70) {
+            if(this.world.keyboard.UP && this.y > -70 && !this.dead) {
                 this.y -= 10;
             }
             this.world.camera_x = -this.x +100;
         }, 1000/60)
 
         setInterval(() => {
-            if(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            if(this.world.keyboard.RIGHT && !this.dead || this.world.keyboard.LEFT && !this.dead) {
                 this.playAnimation(this.IMAGES_SWIM)
             }
         }, 100);
@@ -108,10 +108,11 @@ offset = {
         }, 300);
 
         setInterval(() => {
-            if(this.world.keyboard.SPACE) {
+            if(this.world.keyboard.SPACE && this.poison_percentage > 0 && !this.dead) {
                 this.playAnimation(this.IMAGES_ATTACK);
+                console.log('ATTACK');
             }
-        }, 500);
+        }, 140);
     }
     
     setPoisonPercentage() {

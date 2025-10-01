@@ -5,9 +5,10 @@ class PufferFish extends MoveableObject {
     offset = {
         top: 0,
         right:0,
-        bottom:0,
+        bottom:10,
         left:0
     }
+    hit_status = false;
 
     constructor() {
         super();
@@ -16,8 +17,17 @@ class PufferFish extends MoveableObject {
 
     animate() {
         setInterval(() => {
-        this.playAnimation(this.IMAGES_SWIM)
-        }, 160);
+        if (!this.hit_status) {
+            this.playAnimation(this.IMAGES_SWIM)
+        }
+        else {
+            this.playAnimation(this.IMAGES_TRANSITION)
+            this.playAnimation(this.IMAGES_BIG_SWIM);
+            this.offset.bottom = 0;
+            this.width = 80
+            this.height = 60
+        }
+        },  60);
     }
 
     movement() {

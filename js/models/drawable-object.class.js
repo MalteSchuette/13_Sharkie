@@ -40,7 +40,7 @@ class DrawableObject {
 
     drawFrame(ctx) {
         this.getRealFrame();
-        if (this instanceof Character || this instanceof LilaJelly || this instanceof PinkJelly || this instanceof GreenJelly || this instanceof YellowJelly || this instanceof PufferFish || this instanceof Endboss) {
+        if (this instanceof Character || this instanceof Bubble || this instanceof LilaJelly || this instanceof PinkJelly || this instanceof GreenJelly || this instanceof YellowJelly || this instanceof PufferFish || this instanceof Endboss) {
         ctx.beginPath();
         ctx.lineWidth = '5';
         ctx.strokeStyle = 'red';
