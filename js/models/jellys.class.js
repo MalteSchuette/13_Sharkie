@@ -11,11 +11,11 @@ class LilaJelly extends MoveableObject{
     hit_status = false;
 
     IMAGES_SWIM = [
-            'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
-            'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png',
-            'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 3.png',
-            'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png'
-        ];
+        'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
+        'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png',
+        'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 3.png',
+        'assets/img/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png'
+    ]
 
     IMAGES_DEAD = [
         'assets/img/2.Enemy/2 Jelly fish/Dead/Lila/l1.png',
@@ -83,11 +83,11 @@ class YellowJelly extends MoveableObject{
     hit_status = false;
     
     IMAGES_SWIM = [
-            'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png',
-            'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 2.png',
-            'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 3.png',
-            'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png'
-        ];
+        'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png',
+        'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 2.png',
+        'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 3.png',
+        'assets/img/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png'
+    ]
 
     IMAGES_DEAD = [
         'assets/img/2.Enemy/2 Jelly fish/Dead/Yellow/y1.png',
@@ -155,11 +155,11 @@ class GreenJelly extends MoveableObject{
     hit_status = false;
 
     IMAGES_SWIM = [
-            'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 1.png',
-            'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 2.png',
-            'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 3.png',
-            'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 4.png'
-        ];
+        'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 1.png',
+        'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 2.png',
+        'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 3.png',
+        'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Green 4.png'
+    ]
 
     IMAGES_DEAD = [
         'assets/img/2.Enemy/2 Jelly fish/Dead/green/g1.png',
@@ -209,7 +209,7 @@ class GreenJelly extends MoveableObject{
 }
 
 
-class PinkJelly extends MoveableObject{
+class PinkJelly extends MoveableObject {
     world;
     pink_direction;
     width = 80;
@@ -222,11 +222,11 @@ class PinkJelly extends MoveableObject{
     hit_status = false;
 
     IMAGES_SWIM = [
-            'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png',
-            'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 2.png',
-            'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 3.png',
-            'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 4.png'
-        ];
+        'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png',
+        'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 2.png',
+        'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 3.png',
+        'assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 4.png'
+    ]
 
     IMAGES_DEAD = [
         'assets/img/2.Enemy/2 Jelly fish/Dead/Pink/P1.png',
@@ -238,6 +238,7 @@ class PinkJelly extends MoveableObject{
     constructor(x, y) {
         super().loadImage('assets/img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png')
         this.loadImages(this.IMAGES_SWIM);
+        this.loadImages(this.IMAGES_DEAD);
         this.x = x;
         this.y = y;
         this.pink_direction = Math.random() < 0.5 ? "up" : "down";
@@ -247,13 +248,18 @@ class PinkJelly extends MoveableObject{
 
     movement() {
         setInterval(() => {
-        this.x -= 4 * Math.random();
-        if (world.character.y < this.y) {
-            this.y -=3;
+            if (!this.hit_status) {
+                this.x -= 4 * Math.random();
+                if (world.character.y < this.y) {
+                    this.y -=3;
+                    }
+                else if (world.character.y > this.y) {
+                    this.y += 3;
+                }
             }
-        else if (world.character.y > this.y) {
-            this.y += 3;
-        }
+            else {
+                this.y -= 5
+            }
         },1000 / 60);
     }
 

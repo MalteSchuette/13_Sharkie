@@ -53,18 +53,30 @@ class World {
                 }
             }
         });
-    }
-
-
-
-    checkBubbleAttack() {
-        if(this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead) {
-            let bubble = new Bubble(this.character.x, this.character.y);
-            this.character.poison_percentage -= 20;
-            this.poisonBar.setPercentage(this.character.poison_percentage)
-            this.bubbles.push(bubble);
+        for (let i = this.level.collectables.length - 1; i >= 0; i--) {
+            const collectable = this.level.collectables[i];
+            if (this.character.isColliding(collectable)) {
+                this.character.coin_counter += 20;
+                this.coinBar.setPercentage(this.character.coin_counter);
+                console.log("collect");
+                this.level.collectables.splice(i, 1);
+            }
         }
     }
+
+checkBubbleAttack() {
+    if (this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead) {
+        if (this.character.status !== "attack") {
+            this.character.status = "attack";
+            this.character.currentImage = 0;
+        }
+        let bubble = new Bubble(this.character.x, this.character.y);
+        this.character.poison_percentage -= 20;
+        this.poisonBar.setPercentage(this.character.poison_percentage);
+        this.bubbles.push(bubble);
+    }
+}
+
 
     recoverPoison() {
         setInterval(() => {

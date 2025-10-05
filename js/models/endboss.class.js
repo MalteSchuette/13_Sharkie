@@ -7,7 +7,8 @@ class Endboss extends MoveableObject {
         right:30,
         bottom:125,
         left:30
-    }    
+    }
+    movement_trigger = false;
 
     IMAGES_SWIM = [
         'assets/img/2.Enemy/3 Final_Enemy/2.floating/1.png',
@@ -28,8 +29,7 @@ class Endboss extends MoveableObject {
     constructor(){
         super().loadImage('assets/img/2.Enemy/3 Final_Enemy/2.floating/1.png');
         this.loadImages(this.IMAGES_SWIM);
-        // this.x = 720*8;
-        this.x = 720;
+        this.x = 720*3;
         this.y = -150;
         this.animate();
         this.movement();
@@ -47,12 +47,18 @@ class Endboss extends MoveableObject {
 
     movement() {
         setInterval(() => {
-            this.x -= 4 * Math.random();
-            if (world.character.y < this.y + 250) {
-                this.y -=3;
+            if (world.character.x > 1800) {
+                this.movement_trigger = true;
+            }
+            if (this.movement_trigger){
+                this.x -= 4 * Math.random();
+                let distance_y = world.character.y - this.y - 250;
+                if (distance_y < this.y) {
+                    this.y -= 10;
+                    }
+                else if (distance_y > this.y) {
+                    this.y += 10;
                 }
-            else if (world.character.y > this.y) {
-                this.y += 3;
             }
         },1000 / 60);
     }

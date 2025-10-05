@@ -52,6 +52,9 @@ offset = {
         bottom:40,
         left:35
     }
+status = "idle";
+counter = 0;
+coin_counter = 0;
 
     constructor() {
         super().loadImage('assets/img/1.Sharkie/1.IDLE/1.png');
@@ -64,62 +67,66 @@ offset = {
         this.y = 150;
     }
 
-    animate(){
-        setInterval(() => {
-            if(this.world.keyboard.RIGHT && this.x < level1.level_end_x && !this.dead) {
-                this.x += 10;
-                this.otherDirection = false;
-            }
-            if(this.world.keyboard.LEFT && this.x > -100 && !this.dead) {
-                this.x -= 10;
-                this.otherDirection = true;
-            }
-            if(this.world.keyboard.DOWN && this.y < 360 && !this.dead) {
-                this.y += 10;
-            }
-            if(this.world.keyboard.UP && this.y > -70 && !this.dead) {
-                this.y -= 10;
-            }
-            this.world.camera_x = -this.x +100;
-        }, 1000/60)
+animate() {
+    setInterval(() => {
+        if(this.world.keyboard.RIGHT && this.x < level1.level_end_x && !this.dead) {
+            this.x += 10;
+            this.otherDirection = false;
+        }
+        if(this.world.keyboard.LEFT && this.x > -100 && !this.dead) {
+            this.x -= 10;
+            this.otherDirection = true;
+        }
+        if(this.world.keyboard.DOWN && this.y < 360 && !this.dead) {
+            this.y += 10;
+        }
+        if(this.world.keyboard.UP && this.y > -70 && !this.dead) {
+            this.y -= 10;
+        }
 
-        setInterval(() => {
-            if(this.world.keyboard.RIGHT && !this.dead || this.world.keyboard.LEFT && !this.dead) {
-                this.playAnimation(this.IMAGES_SWIM)
+        this.world.camera_x = -this.x + 100;
+    }, 1000/60);
+
+    setInterval(() => {
+        if (this.isDead()) {
+            this.status = "dead";
+            this.dead = true;
+            this.playAnimation(this.IMAGES_DEAD_POISON);
+        }
+        else if (this.status === "attack") {
+            this.playAnimation(this.IMAGES_ATTACK);
+
+            if (this.currentImage >= this.IMAGES_ATTACK.length) {
+                this.status = "idle";
+                this.currentImage = 0;
             }
-        }, 100);
+        }
+        else if (this.isHurt()) {
+            this.status = "hurt";
+            this.playAnimation(this.IMAGES_HURT_POISON);
+        }
+        else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.status = "swim";
+            this.playAnimation(this.IMAGES_SWIM);
+        }
+        else {
+            this.status = "idle";
+            this.loadImage('assets/img/1.Sharkie/1.IDLE/1.png');
+        }
+    }, 120);
+
+    setInterval(() => {
+        if (this.world.keyboard.SPACE && this.poison_percentage > 0 && !this.dead && this.status !== "attack") {
+            this.status = "attack";
+            this.currentImage = 0; 
+        }
+    }, 60);
+}
     
-        // permanente, langsame Animation
-        setInterval(() => {
-            if (this.isDead()) {
-                if (!this.dead) {
-                this.playAnimation(this.IMAGES_DEAD_POISON)
-                this.dead = true;
-                } else {
-                this.playAnimation([this.IMAGES_DEAD_POISON[10],this.IMAGES_DEAD_POISON[11]])
-                }
-            }
-            else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT_POISON)
-            }
-            else {
-            this.playAnimation(this.IMAGES_SWIM)
-            }
-        }, 300);
-
-        setInterval(() => {
-            if(this.world.keyboard.SPACE && this.poison_percentage > 0 && !this.dead) {
-                this.playAnimation(this.IMAGES_ATTACK);
-                console.log('ATTACK');
-            }
-        }, 140);
-    }
-    
-    setPoisonPercentage() {
-            if (this.poison_percentage < 100){
-                this.poison_percentage += 20;
-                console.log(this.poison_percentage);
-            }
-
-    }
+setPoisonPercentage() {
+        if (this.poison_percentage < 100){
+            this.poison_percentage += 20;
+            console.log(this.poison_percentage);
+        }
+}
 }
