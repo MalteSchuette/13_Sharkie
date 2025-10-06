@@ -1,7 +1,22 @@
+@font-face {
+    font-family: 'LuckiestGuy-Regular.ttf';
+    src: url(./assets/img/5.Font/LuckiestGuy-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     display: flex;
+    font-family: 'LuckiestGuy-Regular.ttf';
     flex-direction: column;
     align-items: center;
+    background-image: url('./assets/img/website_bg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    color: white;
 }
 
 .game-container {
@@ -27,6 +42,21 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+        #title {
+        display: none;
+    }
+}
+
+@media only screen and (max-height:480px) {
+    canvas {
+        height: 100vh;
+    }
 }
 
 .d_none {
