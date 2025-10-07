@@ -14,10 +14,15 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.draw();
         this.setWorld();
+
+    }
+
+    start() {
+        soundtrack.play();
         this.run();
         this.recoverPoison();
+        this.draw();
     }
 
     setWorld(){
@@ -57,6 +62,8 @@ class World {
             const collectable = this.level.collectables[i];
             if (this.character.isColliding(collectable)) {
                 this.character.coin_counter += 20;
+                sfx.coin.currentTime = 0;
+                sfx.coin.play();
                 this.coinBar.setPercentage(this.character.coin_counter);
                 console.log("collect");
                 this.level.collectables.splice(i, 1);
@@ -72,6 +79,8 @@ checkBubbleAttack() {
         }
         let bubble = new Bubble(this.character.x, this.character.y);
         this.character.poison_percentage -= 20;
+        sfx.attack.currentTime = 0;
+        sfx.attack.play();
         this.poisonBar.setPercentage(this.character.poison_percentage);
         this.bubbles.push(bubble);
     }

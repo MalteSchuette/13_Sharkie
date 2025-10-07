@@ -16,11 +16,11 @@ class OrangeFish extends PufferFish {
     ]
 
     IMAGES_BIG_SWIM = [
-        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/1.bubbleswim1.png',
-        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/1.bubbleswim2.png',
-        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/1.bubbleswim3.png',
-        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/1.bubbleswim4.png',
-        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/1.bubbleswim5.png'
+        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/2.bubbleswim1.png',
+        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/2.bubbleswim2.png',
+        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/2.bubbleswim3.png',
+        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/2.bubbleswim4.png',
+        'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/2.bubbleswim5.png'
     ]
 
     constructor(x,y) {

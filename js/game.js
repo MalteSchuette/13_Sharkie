@@ -1,18 +1,24 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let soundtrack;
 
-function init() {
+function preloadGame() {
     canvas = document.getElementById("canvas");
+    initLevel();
     world = new World(canvas, keyboard);
+    soundtrack = new Audio('audio/soundtrack.mp3')
+    soundtrack.loop = true;
+    soundtrack.volume = 0.2;
+    console.log("Game ist geladen");
 }
 
-// function removeStartScreen() {
-//   console.log("removeStartScreen läuft!");
-//   const startScreen = document.getElementById("start_screen");
-//   startScreen.classList.add("d_none");
-//   console.log(startScreen.classList);
-// }
+function removeStartScreen() {
+  console.log("removeStartScreen läuft!");
+  const startScreen = document.getElementById("start_screen");
+  startScreen.classList.add("d_none");
+  console.log(startScreen.classList);
+}
 
 window.addEventListener('keydown', (e) => {
 
