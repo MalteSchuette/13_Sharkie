@@ -35,9 +35,16 @@
 
 <body onload="preloadGame()">
   <div class="game-container">
+    <button id="mute_button" onclick="toggleMute()">
+      <img id="mute_icon" src="./assets/img/6.Botones/not_muted.png" alt="Mute Button">
+    </button>
+
     <canvas id="canvas" width="720" height="480"></canvas>
-    <div id="start_screen" >
-      <button onclick="initLevel(), world.start(), removeStartScreen()"><img src="./assets/img/6.Botones/Start/4.png" alt=""></button>
+
+    <div id="start_screen">
+      <button onclick="initLevel(), world.start(), removeStartScreen()">
+        <img src="./assets/img/6.Botones/Start/4.png" alt="">
+      </button>
     </div>
   </div>
 </body>

@@ -72,6 +72,8 @@ animate() {
         if(this.world.keyboard.RIGHT && this.x < level1.level_end_x && !this.dead) {
             this.x += 10;
             this.otherDirection = false;
+            console.log(this.x);
+            
         }
         if(this.world.keyboard.LEFT && this.x > -100 && !this.dead) {
             this.x -= 10;

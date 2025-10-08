@@ -1,15 +1,11 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-let soundtrack;
 
 function preloadGame() {
     canvas = document.getElementById("canvas");
     initLevel();
     world = new World(canvas, keyboard);
-    soundtrack = new Audio('audio/soundtrack.mp3')
-    soundtrack.loop = true;
-    soundtrack.volume = 0.2;
     console.log("Game ist geladen");
 }
 

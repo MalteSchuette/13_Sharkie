@@ -9,6 +9,7 @@ class World {
     coinBar = new CoinBar();
     poisonBar = new PoisonBar();
     bubbles = [];
+    
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -53,6 +54,7 @@ class World {
                 if (bubble.isColliding(enemy)) {
                     enemy.hit_status = true;
                     console.log('enemy hit:', enemy);
+                    playHitSound();
                     this.bubbles.splice(i, 1);
                     break;
                 }

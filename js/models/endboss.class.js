@@ -12,6 +12,8 @@ class Endboss extends MoveableObject {
     hit_counter = 0;
     hit_status = false;
     dead = false;
+    deathAnimationFinished;
+    img_counter = 0;
 
     IMAGES_INTRO = [
         'assets/img/2.Enemy/3 Final_Enemy/1.Introduce/1.png',
@@ -56,7 +58,7 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_INTRO);
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 720*4;
+        this.x = 720*5;
         this.y = -150;
         this.animate();
         this.movement();
@@ -77,22 +79,33 @@ class Endboss extends MoveableObject {
                 }
                 i++;
 
-                if (world.character.x >= 2000 && !this.hadFirstContact) {
+                if (world.character.x >= 1900 && !this.hadFirstContact) {
                     i = 0;
-                this.hadFirstContact = true;
-                console.log('FIRST CONTACT');
-                console.log(world.character.x);
-                this.x = 720*3;
+                    this.hadFirstContact = true;
+                    console.log('FIRST CONTACT');
+                    console.log(world.character.x);
+                    sfx.endboss.currentTime = 0;
+                    sfx.endboss.play();
                 }
-            } else {
-                this.playAnimation(this.IMAGES_DEAD)
+            } 
+            else {
+                if (!this.deathAnimationFinished) {
+                    this.playAnimation(this.IMAGES_DEAD);
+                    this.img_counter ++;
+                    if (this.img_counter >= 5) {
+                        this.deathAnimationFinished = true;
+                    }
+                }
+                else {
+                    this.playAnimation([this.IMAGES_DEAD[3],this.IMAGES_DEAD[4],this.IMAGES_DEAD[5]])
+                }
             }
-        }, 160);
+        }, 120);
     }
 
     movement() {
         setInterval(() => {
-            if (world.character.x > 1900) {
+            if (world.character.x > 2100) {
                 this.movement_trigger = true;
             }
             if (this.movement_trigger && !this.dead){
