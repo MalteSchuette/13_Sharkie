@@ -45,6 +45,7 @@ class World {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
+                sfx.hurt.play();
                 this.lifeBar.setPercentage(this.character.energy);
             }
 
@@ -53,7 +54,6 @@ class World {
                 if (!bubble) continue;
                 if (bubble.isColliding(enemy)) {
                     enemy.hit_status = true;
-                    console.log('enemy hit:', enemy);
                     playHitSound();
                     this.bubbles.splice(i, 1);
                     break;
@@ -67,7 +67,6 @@ class World {
                 sfx.coin.currentTime = 0;
                 sfx.coin.play();
                 this.coinBar.setPercentage(this.character.coin_counter);
-                console.log("collect");
                 this.level.collectables.splice(i, 1);
             }
         }
@@ -75,18 +74,33 @@ class World {
 
 checkBubbleAttack() {
     if (this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead) {
-        if (this.character.status !== "attack") {
+        if (!this.isAttacking) {
+            this.isAttacking = true;
             this.character.status = "attack";
             this.character.currentImage = 0;
+
+            // Angriffssound und Bubble synchron nach ~500ms (je nach Animationslänge)
+            setTimeout(() => {
+                sfx.attack.currentTime = 0;
+                sfx.attack.play();
+
+                const bubble = new Bubble(this.character.x, this.character.y, this.character.otherDirection);
+                this.character.poison_percentage -= 20;
+                this.poisonBar.setPercentage(this.character.poison_percentage);
+                this.bubbles.push(bubble);
+            }, 500);
+
+            // Nach Ende der Animationsdauer (z. B. 700 ms) zurücksetzen
+            setTimeout(() => {
+                this.character.status = "idle";
+                this.character.currentImage = 0;
+                this.isAttacking = false;
+            }, 700);
         }
-        let bubble = new Bubble(this.character.x, this.character.y);
-        this.character.poison_percentage -= 20;
-        sfx.attack.currentTime = 0;
-        sfx.attack.play();
-        this.poisonBar.setPercentage(this.character.poison_percentage);
-        this.bubbles.push(bubble);
     }
 }
+
+
 
 
     recoverPoison() {

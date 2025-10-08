@@ -23,7 +23,7 @@ class OrangeFish extends PufferFish {
         'assets/img/2.Enemy/1.Puffer_fish/3.Bubbleeswim/2.bubbleswim5.png'
     ]
 
-    constructor(x,y) {
+    constructor(x, y, speedX) {
         super();
         this.loadImage('assets/img/2.Enemy/1.Puffer_fish/1.Swim/2.swim1.png');
         this.loadImages(this.IMAGES_SWIM);
@@ -31,6 +31,7 @@ class OrangeFish extends PufferFish {
         this.loadImages(this.IMAGES_BIG_SWIM);
         this.x = x;
         this.y = y;
+        this.speedX = speedX;
         this.animate()
     }
 }

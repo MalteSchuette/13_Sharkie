@@ -9,6 +9,8 @@ class PufferFish extends MoveableObject {
         left:0
     }
     hit_status = false;
+    
+
 
     constructor() {
         super();
@@ -32,7 +34,7 @@ class PufferFish extends MoveableObject {
 
     movement() {
         setInterval(() => {
-        this.x -= 2;
+        this.x -= this.speedX;
         },1000/60)
     }
 }
