@@ -18,19 +18,25 @@ IMAGES_HURT_POISON = [
         ]
 
 IMAGES_DEAD_POISON = [
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/1.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/2.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/3.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/4.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/5.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/6.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/7.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/8.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/9.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/10.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/11.png',
-            'assets/img/1.Sharkie/6.dead/1.Poisoned/12.png'
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00000.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00001.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00002.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00003.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00004.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00005.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00006.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00007.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00008.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00009.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00010.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00011.png'
         ]
+
+IMAGES_DEAD_FINAL = [
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00009.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00010.png',
+            'assets/img/1.Sharkie/6.dead/1.Poisoned/sin subir/DES 2_00011.png'
+]
 
 IMAGES_ATTACK = [
     'assets/img/1.Sharkie/4.Attack/Bubble/op2_no_bubble/1.png',
@@ -129,7 +135,7 @@ deathAnimation() {
         this.deathAnimationPlayed = true;
     }
     else {
-        this.playAnimation(this.IMAGES_DEAD_POISON[10], this.IMAGES_DEAD_POISON[11])
+        this.playAnimation([this.IMAGES_DEAD_POISON[9], this.IMAGES_DEAD_POISON[10], this.IMAGES_DEAD_POISON[11]])
     }
 }
 

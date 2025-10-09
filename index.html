@@ -2,35 +2,33 @@
 <html lang="de">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharkie</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="./assets/img/1.Sharkie/1.IDLE/1.png" type="image/x-icon">
-    <script src="js/models/drawable-object.class.js"></script>
-    <script src="js/models/moveable-object.class.js"></script>
-    <script src="js/models/character.class.js"></script>
-    <script src="js/models/background-object.class.js"></script>
-    <script src="js/models/status-bar.class.js"></script>
-    <script src="levels/level1.js"></script>
-    <script src="js/sound.js"></script>
-    <script src="js/models/world.class.js"></script>
-    <script src="js/models/life-bar.class.js"></script>
-    <script src="js/models/coin-bar.class.js"></script>
-    <script src="js/models/poison-bar.class.js"></script>
-    <script src="js/models/jellys.class.js"></script>
-    <script src="js/models/fish.class.js"></script>
-    <script src="js/models/green-fish.class.js"></script>
-    <script src="js/models/orange-fish.class.js"></script>
-    <script src="js/models/pink-fish.class.js"></script>
-    <script src="js/models/bubble.class.js"></script> 
-    <script src="js/models/keyboard.class.js"></script>
-    <script src="js/models/level.class.js"></script>
-    <script src="js/models/coin.class.js"></script>
-    <script src="js/models/endboss.class.js"></script>
-    <script src="js/game.js"></script>
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sharkie</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="./assets/img/1.Sharkie/1.IDLE/1.png" type="image/x-icon">
+  <script src="js/models/drawable-object.class.js"></script>
+  <script src="js/models/moveable-object.class.js"></script>
+  <script src="js/models/character.class.js"></script>
+  <script src="js/models/background-object.class.js"></script>
+  <script src="js/models/status-bar.class.js"></script>
+  <script src="levels/level1.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/models/world.class.js"></script>
+  <script src="js/models/life-bar.class.js"></script>
+  <script src="js/models/coin-bar.class.js"></script>
+  <script src="js/models/poison-bar.class.js"></script>
+  <script src="js/models/jellys.class.js"></script>
+  <script src="js/models/fish.class.js"></script>
+  <script src="js/models/green-fish.class.js"></script>
+  <script src="js/models/orange-fish.class.js"></script>
+  <script src="js/models/pink-fish.class.js"></script>
+  <script src="js/models/bubble.class.js"></script>
+  <script src="js/models/keyboard.class.js"></script>
+  <script src="js/models/level.class.js"></script>
+  <script src="js/models/coin.class.js"></script>
+  <script src="js/models/endboss.class.js"></script>
+  <script src="js/game.js"></script>
 </head>
 
 <body onload="preloadGame()">
@@ -43,10 +41,31 @@
       <button onclick="initLevel(), world.start(), removeStartScreen()">
         <img src="./assets/img/6.Botones/Start/4.png" alt="">
       </button>
-      <button>
+      <button onclick="toggleDnone()">
         <img src="./assets/img/6.Botones/controls_button.png" alt="">
+      </button>
+      <img id="controls_img" class="d_none" onclick="toggleDnone()" src="./assets/img/6.Botones/Instructions 2.png"
+        alt="">
+    </div>
+    <div id="gameOverScreen">
+      <img id="lose_screen" src="assets/img/6.Botones/Tittles/Game Over/Recurso 10.png" alt="You Lose">
+      <button onclick="restartGame()">
+        <img src="./assets/img/6.Botones/Try again/Recurso 18.png" alt="Restart Button">
+      </button>
+      <button onclick="location.reload()">
+        <img src="./assets/img/button_main_menu.png" alt="Main Menu Button">
+      </button>
+    </div>
+    <div id="victoryScreen">
+      <img id="victory_image" src="assets/img/6.Botones/Tittles/You win/Recurso 19.png" alt="You Win">
+      <button onclick="restartGame()">
+        <img src="./assets/img/6.Botones/button_play_again.png" alt="Restart Button">
+      </button>
+      <button onclick="location.reload()">
+        <img src="./assets/img/button_main_menu.png" alt="Main Menu Button">
       </button>
     </div>
   </div>
 </body>
+
 </html>

@@ -9,14 +9,14 @@ class World {
     coinBar = new CoinBar();
     poisonBar = new PoisonBar();
     bubbles = [];
-    
+    gameOver = false;
+    runInterval;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.setWorld();
-
     }
 
     start() {
@@ -31,15 +31,33 @@ class World {
         this.level.enemies.forEach( (enemy) =>{
             enemy.world = this;
         })
-
     }
 
     run() {
-        setInterval(() => {
-            this.checkCollisions();
-            this.checkBubbleAttack()    
+        this.runInterval = setInterval(() => {
+            if (!this.gameOver) {
+                this.checkCollisions();
+                this.checkBubbleAttack();
+                if (this.character.dead) {
+                    this.triggerGameOver();
+                }
+            }
         }, 100);
     }
+    
+    stop() {
+        clearInterval(this.runInterval);
+    }
+
+    triggerVictory() {
+        this.gameOver = true;
+        soundtrack.pause();
+        sfx.win.currentTime = 0;
+        sfx.win.play()
+        const overlay = document.getElementById('victoryScreen');
+        overlay.style.display = 'flex';
+    }
+
 
     checkCollisions() {
         this.level.enemies.forEach(enemy => {
@@ -72,36 +90,31 @@ class World {
         }
     }
 
-checkBubbleAttack() {
-    if (this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead) {
-        if (!this.isAttacking) {
-            this.isAttacking = true;
-            this.character.status = "attack";
-            this.character.currentImage = 0;
-
-            // Angriffssound und Bubble synchron nach ~500ms (je nach Animationslänge)
-            setTimeout(() => {
-                sfx.attack.currentTime = 0;
-                sfx.attack.play();
-
-                const bubble = new Bubble(this.character.x, this.character.y, this.character.otherDirection);
-                this.character.poison_percentage -= 20;
-                this.poisonBar.setPercentage(this.character.poison_percentage);
-                this.bubbles.push(bubble);
-            }, 500);
-
-            // Nach Ende der Animationsdauer (z. B. 700 ms) zurücksetzen
-            setTimeout(() => {
-                this.character.status = "idle";
+    checkBubbleAttack() {
+        if (this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead) {
+            if (!this.isAttacking) {
+                this.isAttacking = true;
+                this.character.status = "attack";
                 this.character.currentImage = 0;
-                this.isAttacking = false;
-            }, 700);
+
+                setTimeout(() => {
+                    sfx.attack.currentTime = 0;
+                    sfx.attack.play();
+
+                    const bubble = new Bubble(this.character.x, this.character.y, this.character.otherDirection);
+                    this.character.poison_percentage -= 20;
+                    this.poisonBar.setPercentage(this.character.poison_percentage);
+                    this.bubbles.push(bubble);
+                }, 500);
+
+                setTimeout(() => {
+                    this.character.status = "idle";
+                    this.character.currentImage = 0;
+                    this.isAttacking = false;
+                }, 700);
+            }
         }
     }
-}
-
-
-
 
     recoverPoison() {
         setInterval(() => {
@@ -120,13 +133,12 @@ checkBubbleAttack() {
         
         this.addArrayToMap(this.level.enemies);
         this.addToMap(this.character);
-        this.addArrayToMap(this.level.collectables)
-        this.addArrayToMap(this.bubbles)
-
+        this.addArrayToMap(this.level.collectables);
+        this.addArrayToMap(this.bubbles);
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.lifeBar);
         this.addToMap(this.coinBar);
-        this.addToMap(this.poisonBar)
+        this.addToMap(this.poisonBar);
         this.ctx.translate(this.camera_x, 0);
         
         this.ctx.translate(-this.camera_x, 0);
@@ -166,5 +178,13 @@ checkBubbleAttack() {
 
     flipImageBack(mo) {
         this.ctx.restore();
+    }
+
+    triggerGameOver() {
+        this.gameOver = true;
+        soundtrack.pause();
+
+        const overlay = document.getElementById('gameOverScreen');
+        overlay.style.display = 'flex'; // Zeigt das Overlay an
     }
 }

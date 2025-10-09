@@ -16,6 +16,20 @@ function removeStartScreen() {
   console.log(startScreen.classList);
 }
 
+function toggleDnone() {
+    document.getElementById("controls_img").classList.toggle("d_none")
+
+}
+
+function restartGame() {
+    if (world) world.stop();
+    document.getElementById('gameOverScreen').style.display = 'none';
+    document.getElementById('victoryScreen').style.display = 'none';
+
+    world = new World(document.getElementById('canvas'), keyboard);
+    world.start();
+}
+
 window.addEventListener('keydown', (e) => {
 
     if (e.keyCode == 37 || e.keyCode == 65) {
@@ -53,5 +67,4 @@ window.addEventListener('keyup', (e) => {
     if (e.keyCode == 32) {
         keyboard.SPACE = false;
     }
-    
 })

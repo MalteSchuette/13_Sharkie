@@ -44,6 +44,13 @@ class Endboss extends MoveableObject {
         'assets/img/2.Enemy/3 Final_Enemy/2.floating/13.png'
     ];
 
+    IMAGES_HURT = [
+        'assets/img/2.Enemy/3 Final_Enemy/Hurt/1.png',
+        'assets/img/2.Enemy/3 Final_Enemy/Hurt/2.png',
+        'assets/img/2.Enemy/3 Final_Enemy/Hurt/3.png',
+        'assets/img/2.Enemy/3 Final_Enemy/Hurt/4.png'
+    ]
+
     IMAGES_DEAD = [
         'assets/img/2.Enemy/3 Final_Enemy/Dead/1.png',
         'assets/img/2.Enemy/3 Final_Enemy/Dead/2.png',
@@ -57,6 +64,7 @@ class Endboss extends MoveableObject {
         super().loadImage('assets/img/2.Enemy/3 Final_Enemy/2.floating/1.png');
         this.loadImages(this.IMAGES_INTRO);
         this.loadImages(this.IMAGES_SWIM);
+        this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
         this.x = 720*5;
         this.y = -150;
@@ -79,7 +87,7 @@ class Endboss extends MoveableObject {
                 }
                 i++;
 
-                if (world.character.x >= 1900 && !this.hadFirstContact) {
+                if (world.character.x >= 2500 && !this.hadFirstContact) {
                     i = 0;
                     this.hadFirstContact = true;
                     console.log('FIRST CONTACT');
@@ -117,7 +125,7 @@ class Endboss extends MoveableObject {
                 else if (distance_y > this.y) {
                     this.y += 10;
                 }
-            }
+            }     
         },1000 / 60);
     }
 
@@ -126,10 +134,14 @@ class Endboss extends MoveableObject {
         setInterval(() => {
             if (this.hit_status && this.hit_counter >= 3) {
                 this.dead = true;
+                setTimeout(() => {
+                   world.triggerVictory();
+                }, 1500);
             }
             else if (this.hit_status && !this.dead) {
                 this.hit_counter++;
                 this.hit_status = false;
+                this.playAnimation(this.IMAGES_HURT);
                 console.log(this.hit_counter);
             }
         },100);
