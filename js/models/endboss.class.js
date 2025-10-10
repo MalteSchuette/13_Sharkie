@@ -2,18 +2,15 @@ class Endboss extends MoveableObject {
 
     height = 608;
     width = 570;
-    offset = {
-        top: 280,
-        right:30,
-        bottom:125,
-        left:30
-    }
+    offset = { top: 280, right:30, bottom:125, left:30 };
+
     movement_trigger = false;
     hit_counter = 0;
-    hit_status = false;
     dead = false;
-    deathAnimationFinished;
+    deathAnimationFinished = false;
     img_counter = 0;
+
+    state = 'idle';
 
     IMAGES_INTRO = [
         'assets/img/2.Enemy/3 Final_Enemy/1.Introduce/1.png',
@@ -61,85 +58,94 @@ class Endboss extends MoveableObject {
     ]
 
     constructor(){
-        super().loadImage('assets/img/2.Enemy/3 Final_Enemy/2.floating/1.png');
+        super().loadImage('assets/img/2.Enemy/3 Final_Enemy/1.Introduce/1.png');
         this.loadImages(this.IMAGES_INTRO);
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
+
         this.x = 720*5;
-        this.y = -150;
+        this.y = -100;
+
         this.animate();
         this.movement();
         this.checkHitCounter();
     }
 
-
     animate() {
-    let i = 0;
-    this.hadFirstContact = false;
-        setInterval(() => {
-            if (!this.dead) {
-                if (i < 10) {
-                    this.playAnimation(this.IMAGES_INTRO);
-                }
-                else {
-                    this.playAnimation(this.IMAGES_SWIM);
-                }
-                i++;
+        let frame = 0;
+        let hurtFrame = 0;
 
-                if (world.character.x >= 2500 && !this.hadFirstContact) {
-                    i = 0;
-                    this.hadFirstContact = true;
-                    console.log('FIRST CONTACT');
-                    console.log(world.character.x);
-                    sfx.endboss.currentTime = 0;
-                    sfx.endboss.play();
-                }
-            } 
-            else {
+        setInterval(() => {
+
+            if (this.dead) {
+                this.state = 'dead';
+            }
+
+            if (this.state === 'dead') {
                 if (!this.deathAnimationFinished) {
                     this.playAnimation(this.IMAGES_DEAD);
-                    this.img_counter ++;
-                    if (this.img_counter >= 5) {
+                    this.img_counter++;
+                    if (this.img_counter >= this.IMAGES_DEAD.length) {
                         this.deathAnimationFinished = true;
                     }
-                }
-                else {
-                    this.playAnimation([this.IMAGES_DEAD[3],this.IMAGES_DEAD[4],this.IMAGES_DEAD[5]])
+                } else {
+                    this.playAnimation([this.IMAGES_DEAD[5]]);
                 }
             }
+            else if (this.state === 'intro') {
+                if (frame < this.IMAGES_INTRO.length) {
+                    this.playAnimation([this.IMAGES_INTRO[frame]]);
+                    frame++;
+                } else {
+                    this.state = 'swim';
+                    frame = 0;
+                }
+            }
+            else if (this.state === 'hurt') {
+                if (hurtFrame < this.IMAGES_HURT.length) {
+                    this.playAnimation([this.IMAGES_HURT[hurtFrame]]);
+                    hurtFrame++;
+                } else {
+                    this.state = 'swim';
+                    hurtFrame = 0;
+                }
+            }
+            else if (this.state === 'swim') {
+                this.playAnimation(this.IMAGES_SWIM);
+            }
+
+            if (world.character.x >= 2500 && this.state === 'idle') {
+                this.state = 'intro';
+                this.x = world.character.x + 500;
+                this.y = -100;
+                sfx.endboss.currentTime = 0;
+                sfx.endboss.play();
+            }
+
         }, 120);
     }
 
     movement() {
         setInterval(() => {
-            if (world.character.x > 2100) {
-                this.movement_trigger = true;
-            }
+            if (world.character.x > 2400) this.movement_trigger = true;
             if (this.movement_trigger && !this.dead){
                 this.x -= 4 * Math.random();
-                let distance_y = world.character.y - this.y - 250;
-                if (distance_y < this.y) {
-                    this.y -= 5;
-                    }
-                else if (distance_y > this.y) {
-                    this.y += 5;
-                }
-            }     
+                let distance_y = world.character.y - this.y - 450;
+                if (distance_y < this.y) this.y -= 5;
+                else if (distance_y > this.y) this.y += 5;
+            }
         },1000 / 60);
     }
 
-
     checkHitCounter() {
         setInterval(() => {
-            if (this.hit_status && this.hit_counter >= 3) {
+            if (!this.dead && this.hit_counter >= 5) {
                 this.dead = true;
-            }
-            else if (this.hit_status && !this.dead) {
+            } else if (!this.dead && this.hit_status) {
                 this.hit_counter++;
                 this.hit_status = false;
-                this.playAnimation(this.IMAGES_HURT);
-                console.log(this.hit_counter);
+                this.state = 'hurt';
             }
         },100);
     }

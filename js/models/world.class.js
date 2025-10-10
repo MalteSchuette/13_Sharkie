@@ -31,6 +31,7 @@ class World {
         this.level.enemies.forEach( (enemy) =>{
             enemy.world = this;
         })
+        this.character.animate();
     }
 
     run() {
@@ -50,12 +51,20 @@ class World {
                     this.triggerVictory();
                 }
             }
-        }, 100);
+        }, 80);
     }
     
-    stop() {
+    reset() {
         clearInterval(this.runInterval);
+        document.getElementById('gameOverScreen').style.display = 'none';
+        document.getElementById('victoryScreen').style.display = 'none';
+        initLevel();
+        this.level = level1;
+        this.character = new Character();
+        this.bubbles = [];
+        this.gameOver = false;
     }
+    
 
     triggerVictory() {
         this.gameOver = true;
@@ -99,30 +108,30 @@ class World {
     }
 
     checkBubbleAttack() {
-        if (this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead) {
-            if (!this.isAttacking) {
-                this.isAttacking = true;
-                this.character.status = "attack";
-                this.character.currentImage = 0;
+    if (this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead && !this.isAttacking) {
+        this.isAttacking = true;
+        this.character.status = "attack";
+        this.character.currentImage = 0;
 
-                setTimeout(() => {
-                    sfx.attack.currentTime = 0;
-                    sfx.attack.play();
+        setTimeout(() => {
+            if (this.character.poison_percentage > 0 && !this.character.dead) {
+                sfx.attack.currentTime = 0;
+                sfx.attack.play();
 
-                    const bubble = new Bubble(this.character.x, this.character.y, this.character.otherDirection);
-                    this.character.poison_percentage -= 20;
-                    this.poisonBar.setPercentage(this.character.poison_percentage);
-                    this.bubbles.push(bubble);
-                }, 500);
-
-                setTimeout(() => {
-                    this.character.status = "idle";
-                    this.character.currentImage = 0;
-                    this.isAttacking = false;
-                }, 700);
+                const bubble = new Bubble(this.character.x, this.character.y, this.character.otherDirection);
+                this.character.poison_percentage -= 20;
+                this.poisonBar.setPercentage(this.character.poison_percentage);
+                this.bubbles.push(bubble);
             }
-        }
+        }, 500);
+
+        setTimeout(() => {
+            this.character.status = "idle";
+            this.character.currentImage = 0;
+            this.isAttacking = false;
+        }, 700);
     }
+}
 
     recoverPoison() {
         setInterval(() => {
@@ -193,6 +202,6 @@ class World {
         soundtrack.pause();
         sfx.lost.play();
         const overlay = document.getElementById('gameOverScreen');
-        overlay.style.display = 'flex'; // Zeigt das Overlay an
+        overlay.style.display = 'flex';
     }
 }

@@ -131,6 +131,25 @@ canvas {
     height: auto;
 }
 
+#rotate-screen {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: none; 
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 24px;
+  z-index: 999;
+  padding: 20px;
+}
+
+#rotate-screen p {
+  max-width: 400px;
+  font-family: 'LuckiestGuy-Regular.ttf';
+}
+
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;

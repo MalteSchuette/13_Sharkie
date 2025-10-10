@@ -33,12 +33,15 @@
 
 <body onload="preloadGame()">
   <div class="game-container">
+    <div id="rotate-screen">
+      <p>Bitte drehe dein Gerät, um zu spielen.</p>
+    </div>
     <button id="mute_button" onclick="toggleMute()">
       <img id="mute_icon" src="./assets/img/6.Botones/not_muted.png" alt="Mute Button">
     </button>
     <canvas id="canvas" width="720" height="480"></canvas>
     <div id="start_screen">
-      <button onclick="initLevel(), world.start(), removeStartScreen()">
+      <button onclick="restartGame(), world.start(), removeStartScreen()">
         <img src="./assets/img/6.Botones/Start/4.png" alt="">
       </button>
       <button onclick="toggleDnone()">

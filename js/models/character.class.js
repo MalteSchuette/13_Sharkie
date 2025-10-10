@@ -53,7 +53,7 @@ dead = false;
 poison_percentage = 0;
 offset = {
         top: 75,
-        right:35,
+        right:40,
         bottom:40,
         left:35
     }
@@ -68,7 +68,6 @@ deathAnimationPlayed;
         this.loadImages(this.IMAGES_HURT_POISON);
         this.loadImages(this.IMAGES_DEAD_POISON);
         this.loadImages(this.IMAGES_ATTACK)
-        this.animate();
         this.x = 0;
         this.y = 150;
     }

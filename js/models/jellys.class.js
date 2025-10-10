@@ -18,10 +18,10 @@ class LilaJelly extends MoveableObject{
     ]
 
     IMAGES_DEAD = [
-        'assets/img/2.Enemy/2 Jelly fish/Dead/Lila/l1.png',
-        'assets/img/2.Enemy/2 Jelly fish/Dead/Lila/l2.png',
-        'assets/img/2.Enemy/2 Jelly fish/Dead/Lila/l3.png',
-        'assets/img/2.Enemy/2 Jelly fish/Dead/Lila/l4.png'
+        'assets/img/2.Enemy/2 Jelly fish/Dead/Lila/L1.png',
+        'assets/img/2.Enemy/2 Jelly fish/Dead/Lila/L2.png',
+        'assets/img/2.Enemy/2 Jelly fish/Dead/Lila/L3.png',
+        'assets/img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png'
     ]
 
     constructor(x,y) {

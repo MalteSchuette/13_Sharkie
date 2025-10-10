@@ -6,7 +6,7 @@ class PufferFish extends MoveableObject {
         top: 0,
         right:0,
         bottom:10,
-        left:0
+        left:4,
     }
     hit_status = false;
     
@@ -25,7 +25,11 @@ class PufferFish extends MoveableObject {
         else {
             this.playAnimation(this.IMAGES_TRANSITION)
             this.playAnimation(this.IMAGES_BIG_SWIM);
+            this.width = 80;
+            this.height = 60;
             this.offset.bottom = 0;
+            this.offset.left = 0;
+            this.offset.top = -10;
             this.width = 80
             this.height = 60
         }
@@ -34,7 +38,12 @@ class PufferFish extends MoveableObject {
 
     movement() {
         setInterval(() => {
-        this.x -= this.speedX;
+            if (!this.hit_status) {
+                this.x -= this.speedX;
+            }
+            else {
+                this.x -= 0
+            }
         },1000/60)
     }
 }
