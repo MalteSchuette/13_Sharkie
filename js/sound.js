@@ -4,7 +4,8 @@ const sfx = {
     endboss: new Audio('audio/endboss_spawm.mp3'),
     endboss_dead: new Audio('audio/endboss_dead.mp3'),
     hurt: new Audio('audio/hurt.mp3'),
-    win: new Audio('audio/win_sound.mp3')
+    win: new Audio('audio/win_sound.mp3'),
+    lost: new Audio('audio/sound_game_over.mp3')
 };
 
 let soundtrack = new Audio('audio/soundtrack.mp3');
@@ -28,6 +29,7 @@ sfx.attack.volume = 0.8;
 sfx.endboss.volume = 0.8;
 sfx.hurt.volume = 0.8;
 sfx.win.volume = 0.8;
+sfx.lost.volume = 0.8;
 soundtrack.volume = 0.3;
 
 
@@ -56,6 +58,7 @@ function applyMuteState() {
         sfx.endboss.volume = 0;
         sfx.hurt.volume = 0;
         sfx.win.volume = 0;
+        sfx.lost.volume = 0;
         soundtrack.volume = 0;
     } else {
         sfx.coin.volume = 0.5;
@@ -63,6 +66,7 @@ function applyMuteState() {
         sfx.endboss.volume = 0.8;
         sfx.hurt.volume = 0.8;
         sfx.win.volume = 0.8;
+        sfx.lost.volume = 0.8;
         soundtrack.volume = 0.3;
     }
 }

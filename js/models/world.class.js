@@ -38,8 +38,16 @@ class World {
             if (!this.gameOver) {
                 this.checkCollisions();
                 this.checkBubbleAttack();
-                if (this.character.dead) {
-                    this.triggerGameOver();
+                if (this.character.dead && !this.gameOverTriggered) {
+                    this.gameOverTriggered = true;
+                    setTimeout(() => {
+                        this.triggerGameOver();
+                    }, 500);
+                }
+                const boss = this.level.enemies[this.level.enemies.length -1];
+                if (boss && boss.dead && !this.victoryTriggered) {
+                    this.victoryTriggered = true; 
+                    this.triggerVictory();
                 }
             }
         }, 100);
@@ -183,7 +191,7 @@ class World {
     triggerGameOver() {
         this.gameOver = true;
         soundtrack.pause();
-
+        sfx.lost.play();
         const overlay = document.getElementById('gameOverScreen');
         overlay.style.display = 'flex'; // Zeigt das Overlay an
     }

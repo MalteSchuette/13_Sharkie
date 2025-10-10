@@ -134,9 +134,6 @@ class Endboss extends MoveableObject {
         setInterval(() => {
             if (this.hit_status && this.hit_counter >= 3) {
                 this.dead = true;
-                setTimeout(() => {
-                   world.triggerVictory();
-                }, 1500);
             }
             else if (this.hit_status && !this.dead) {
                 this.hit_counter++;
