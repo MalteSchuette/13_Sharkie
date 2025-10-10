@@ -120,10 +120,10 @@ class Endboss extends MoveableObject {
                 this.x -= 4 * Math.random();
                 let distance_y = world.character.y - this.y - 250;
                 if (distance_y < this.y) {
-                    this.y -= 10;
+                    this.y -= 5;
                     }
                 else if (distance_y > this.y) {
-                    this.y += 10;
+                    this.y += 5;
                 }
             }     
         },1000 / 60);
