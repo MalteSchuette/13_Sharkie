@@ -155,7 +155,6 @@ class Endboss extends MoveableObject {
             if (this.state === 'dead') {
                 this.animateDead();
             } else if (this.state === 'intro') {
-                this.frame = 0;
                 this.animateIntro();
             } else if (this.state === 'hurt') {
                 this.animateHurt();

@@ -191,9 +191,7 @@ class Character extends MoveableObject {
      */
     setPoisonPercentage() {
         if (this.poison_percentage < 100) {
-            this.poison_percentage += 20;
-            console.log(this.poison_percentage);
-            
+            this.poison_percentage += 20;         
         }
     }
 
