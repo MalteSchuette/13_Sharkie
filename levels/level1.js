@@ -1,5 +1,9 @@
+/** Level 1 instance */
 let level1;
 
+/**
+ * Initializes the first level with enemies, background objects, and collectables.
+ */
 function initLevel() {
     level1 =  new Level(
         [

@@ -1,17 +1,61 @@
+/**
+ * Represents the entire game world.
+ * Manages character, enemies, level, camera, UI, and game states.
+ */
 class World {
+    /** The player character. @type {Character} */
     character = new Character();
+
+    /** Current level. @type {Level} */
     level = level1;
+
+    /** Canvas element to draw on. @type {HTMLCanvasElement} */
     canvas;
+
+    /** 2D rendering context of the canvas. @type {CanvasRenderingContext2D} */
     ctx;
+
+    /** poison interval @type {poisonInterval} */
+    poisonInterval;
+
+    /** Keyboard input handler. @type {Keyboard} */
     keyboard;
+
+    /** Camera offset on the x-axis. @type {number} */
     camera_x = 0;
+
+    /** Life bar UI. @type {LifeBar} */
     lifeBar = new LifeBar();
+
+    /** Coin bar UI. @type {CoinBar} */
     coinBar = new CoinBar();
+
+    /** Poison bar UI. @type {PoisonBar} */
     poisonBar = new PoisonBar();
+
+    /** Active bubbles (projectiles). @type {Bubble[]} */
     bubbles = [];
+
+    /** Whether the game is over. @type {boolean} */
     gameOver = false;
+
+    /** Interval ID of the game loop. @type {number} */
     runInterval;
 
+    /** Whether a bubble attack is currently active. @type {boolean} */
+    isAttacking;
+
+    /** Flag to prevent multiple game over triggers. @type {boolean} */
+    gameOverTriggered;
+
+    /** Flag to prevent multiple victory triggers. @type {boolean} */
+    victoryTriggered;
+
+    /**
+     * Creates a new World instance.
+     * @param {HTMLCanvasElement} canvas - Canvas element to render on.
+     * @param {Keyboard} keyboard - Keyboard input handler.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -19,6 +63,7 @@ class World {
         this.setWorld();
     }
 
+    /** Starts music, loops, and rendering. */
     start() {
         soundtrack.play();
         this.run();
@@ -26,6 +71,7 @@ class World {
         this.draw();
     }
 
+    /** Sets up character and enemies with this world and starts animations. */
     setWorld() {
         this.character.world = this;
         this.level.enemies.forEach((enemy) => {
@@ -35,6 +81,7 @@ class World {
         this.character.movement();
     }
 
+    /** Main loop: checks collisions, bubble attacks, and victory/game over conditions. */
     run() {
         this.runInterval = setInterval(() => {
             if (!this.gameOver) {
@@ -55,8 +102,10 @@ class World {
         }, 80);
     }
 
+    /** Resets the world (level, character, bubbles, etc.). */
     reset() {
         clearInterval(this.runInterval);
+        clearInterval(this.poisonInterval);
         document.getElementById('gameOverScreen').style.display = 'none';
         document.getElementById('victoryScreen').style.display = 'none';
         initLevel();
@@ -66,6 +115,7 @@ class World {
         this.gameOver = false;
     }
 
+    /** Triggers victory state. */
     triggerVictory() {
         this.gameOver = true;
         soundtrack.pause();
@@ -75,13 +125,14 @@ class World {
         overlay.style.display = 'flex';
     }
 
+    /** Checks collisions between character, enemies, and collectables. */
     checkCollisions() {
         this.level.enemies.forEach(enemy => {
-            if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                sfx.hurt.play();
-                this.lifeBar.setPercentage(this.character.energy);
-            }
+            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+            this.character.hit();
+            sfx.hurt.play();
+            this.lifeBar.setPercentage(this.character.energy);
+        }
 
             for (let i = this.bubbles.length - 1; i >= 0; i--) {
                 const bubble = this.bubbles[i];
@@ -106,6 +157,7 @@ class World {
         }
     }
 
+    /** Checks and executes bubble attacks (SPACE key). */
     checkBubbleAttack() {
         if (this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead && !this.isAttacking) {
             this.isAttacking = true;
@@ -132,13 +184,15 @@ class World {
         }
     }
 
+    /** Regenerates character's poison over time. */
     recoverPoison() {
-        setInterval(() => {
+        this.poisonInterval = setInterval(() => {
             this.character.setPoisonPercentage();
             this.poisonBar.setPercentage(this.character.poison_percentage);
         }, 3000);
     }
 
+    /** Draws the entire scene and schedules the next frame. */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
@@ -151,20 +205,24 @@ class World {
         this.addToMap(this.lifeBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.poisonBar);
-        this.ctx.translate(this.camera_x, 0);
-        this.ctx.translate(-this.camera_x, 0);
         self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
     }
 
+    /** Adds all elements from an array to the rendering map.
+     * @param {Array<DrawableObject>} element
+     */
     addArrayToMap(element) {
         element.forEach(e => {
             this.addToMap(e);
         });
     }
 
+    /** Draws a single object (handles flipping if necessary).
+     * @param {DrawableObject} mo
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -176,6 +234,9 @@ class World {
         }
     }
 
+    /** Flips an object horizontally.
+     * @param {DrawableObject} mo
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.x + mo.width, mo.y);
@@ -183,10 +244,12 @@ class World {
         this.ctx.translate(-mo.x, -mo.y);
     }
 
+    /** Restores the context after flipping. */
     flipImageBack(mo) {
         this.ctx.restore();
     }
 
+    /** Triggers game over state and shows the overlay. */
     triggerGameOver() {
         this.gameOver = true;
         soundtrack.pause();

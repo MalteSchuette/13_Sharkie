@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: game.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: game.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** @type {HTMLCanvasElement} */
+let canvas;
+
+/** @type {World} */
+let world;
+
+/** @type {Keyboard} */
+let keyboard = new Keyboard();
+
+/**
+ * Loads the game, initializes the level and the world.
+ */
+function preloadGame() {
+    canvas = document.getElementById("canvas");
+    initLevel();
+    world = new World(canvas, keyboard);
+}
+
+/**
+ * Removes the start screen and shows overlay on mobile devices.
+ */
+function removeStartScreen() {
+    const startScreen = document.getElementById("start_screen");
+    startScreen.classList.add("d_none");
+
+    if (isMobileDevice()) {
+        const mobileOverlay = document.querySelector('.mobile_overlay');
+        mobileOverlay.style.display = 'flex';
+    }
+}
+
+/**
+ * Toggles visibility of the controls image.
+ */
+function toggleDnone() {
+    document.getElementById("controls_img").classList.toggle("d_none")
+}
+
+/**
+ * Restarts the game and resets the world.
+ */
+function restartGame() {
+    if (world) world.reset();
+    world = new World(document.getElementById('canvas'), keyboard);
+    world.start();
+}
+
+/**
+ * Checks the screen orientation and shows rotation hint if needed.
+ */
+function checkOrientation() {
+    const rotateScreen = document.getElementById('rotate-screen');
+    if (window.innerHeight > window.innerWidth) {
+        rotateScreen.style.display = 'flex';
+    } else {
+        rotateScreen.style.display = 'none';
+    }
+}
+
+/**
+ * Detects if the device is a mobile device.
+ * @returns {boolean} True if a mobile device is detected.
+ */
+function isMobileDevice() {
+    return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+}
+
+/**
+ * Sets background for mobile devices on page load.
+ */
+window.addEventListener('load', () => {
+    if (isMobileDevice()) {
+        document.body.style.backgroundImage = 'none';
+        document.body.style.backgroundColor = '#000';
+    }
+});
+
+// Keyboard event listeners
+window.addEventListener('keydown', (e) => {
+    if (e.keyCode == 37 || e.keyCode == 65) keyboard.LEFT = true;
+    if (e.keyCode == 38 || e.keyCode == 87) keyboard.UP = true;
+    if (e.keyCode == 39 || e.keyCode == 68) keyboard.RIGHT = true;
+    if (e.keyCode == 40 || e.keyCode == 83) keyboard.DOWN = true;
+    if (e.keyCode == 32) keyboard.SPACE = true;
+});
+
+window.addEventListener('keyup', (e) => {
+    if (e.keyCode == 37 || e.keyCode == 65) keyboard.LEFT = false;
+    if (e.keyCode == 38 || e.keyCode == 87) keyboard.UP = false;
+    if (e.keyCode == 39 || e.keyCode == 68) keyboard.RIGHT = false;
+    if (e.keyCode == 40 || e.keyCode == 83) keyboard.DOWN = false;
+    if (e.keyCode == 32) keyboard.SPACE = false;
+});
+
+// Touch controls event listeners
+const touchControls = [
+    {id: 'btn_left', key: 'LEFT'},
+    {id: 'btn_right', key: 'RIGHT'},
+    {id: 'btn_up', key: 'UP'},
+    {id: 'btn_down', key: 'DOWN'},
+    {id: 'btn_att', key: 'SPACE'}
+];
+
+touchControls.forEach(control => {
+    const btn = document.getElementById(control.id);
+    btn.addEventListener('touchstart', (e) => { e.preventDefault(); keyboard[control.key] = true; });
+    btn.addEventListener('touchend', (e) => { e.preventDefault(); keyboard[control.key] = false; });
+});
+
+// Orientation and window resize event listeners
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
+window.addEventListener('load', checkOrientation);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bubble.html">Bubble</a></li><li><a href="Character.html">Character</a></li><li><a href="Coin.html">Coin</a></li><li><a href="CoinBar.html">CoinBar</a></li><li><a href="DrawableObject.html">DrawableObject</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="GreenFish.html">GreenFish</a></li><li><a href="GreenJelly.html">GreenJelly</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="LifeBar.html">LifeBar</a></li><li><a href="LilaJelly.html">LilaJelly</a></li><li><a href="MoveableObject.html">MoveableObject</a></li><li><a href="OrangeFish.html">OrangeFish</a></li><li><a href="PinkFish.html">PinkFish</a></li><li><a href="PinkJelly.html">PinkJelly</a></li><li><a href="PoisonBar.html">PoisonBar</a></li><li><a href="PufferFish.html">PufferFish</a></li><li><a href="StatusBar.html">StatusBar</a></li><li><a href="World.html">World</a></li><li><a href="YellowJelly.html">YellowJelly</a></li></ul><h3>Global</h3><ul><li><a href="global.html#applyMuteState">applyMuteState</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#checkOrientation">checkOrientation</a></li><li><a href="global.html#hitSounds">hitSounds</a></li><li><a href="global.html#isMobileDevice">isMobileDevice</a></li><li><a href="global.html#isMuted">isMuted</a></li><li><a href="global.html#keyboard">keyboard</a></li><li><a href="global.html#playHitSound">playHitSound</a></li><li><a href="global.html#preloadGame">preloadGame</a></li><li><a href="global.html#removeStartScreen">removeStartScreen</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#sfx">sfx</a></li><li><a href="global.html#soundtrack">soundtrack</a></li><li><a href="global.html#toggleDnone">toggleDnone</a></li><li><a href="global.html#toggleMute">toggleMute</a></li><li><a href="global.html#world">world</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Sun Oct 12 2025 22:01:24 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

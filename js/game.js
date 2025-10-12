@@ -8,7 +8,7 @@ let world;
 let keyboard = new Keyboard();
 
 /**
- * Lädt das Spiel, initialisiert das Level und die Welt.
+ * Loads the game, initializes the level and the world.
  */
 function preloadGame() {
     canvas = document.getElementById("canvas");
@@ -17,7 +17,7 @@ function preloadGame() {
 }
 
 /**
- * Entfernt den Startbildschirm und zeigt bei mobilen Geräten das Overlay.
+ * Removes the start screen and shows overlay on mobile devices.
  */
 function removeStartScreen() {
     const startScreen = document.getElementById("start_screen");
@@ -30,14 +30,14 @@ function removeStartScreen() {
 }
 
 /**
- * Toggle Sichtbarkeit des Steuerelement-Images.
+ * Toggles visibility of the controls image.
  */
 function toggleDnone() {
     document.getElementById("controls_img").classList.toggle("d_none")
 }
 
 /**
- * Startet das Spiel neu, setzt die Welt zurück.
+ * Restarts the game and resets the world.
  */
 function restartGame() {
     if (world) world.reset();
@@ -46,7 +46,7 @@ function restartGame() {
 }
 
 /**
- * Prüft die Bildschirmorientierung und zeigt ggf. den Hinweis zum Drehen an.
+ * Checks the screen orientation and shows rotation hint if needed.
  */
 function checkOrientation() {
     const rotateScreen = document.getElementById('rotate-screen');
@@ -58,15 +58,15 @@ function checkOrientation() {
 }
 
 /**
- * Prüft, ob das Gerät ein mobiles Gerät ist.
- * @returns {boolean} True, wenn ein mobiles Gerät erkannt wird
+ * Detects if the device is a mobile device.
+ * @returns {boolean} True if a mobile device is detected.
  */
 function isMobileDevice() {
     return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
 }
 
 /**
- * Setzt beim Laden der Seite den Hintergrund für mobile Geräte.
+ * Sets background for mobile devices on page load.
  */
 window.addEventListener('load', () => {
     if (isMobileDevice()) {
@@ -75,7 +75,7 @@ window.addEventListener('load', () => {
     }
 });
 
-// Event-Listener für Tastatur
+// Keyboard event listeners
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 37 || e.keyCode == 65) keyboard.LEFT = true;
     if (e.keyCode == 38 || e.keyCode == 87) keyboard.UP = true;
@@ -92,7 +92,7 @@ window.addEventListener('keyup', (e) => {
     if (e.keyCode == 32) keyboard.SPACE = false;
 });
 
-// Event-Listener für Touch-Steuerung
+// Touch controls event listeners
 const touchControls = [
     {id: 'btn_left', key: 'LEFT'},
     {id: 'btn_right', key: 'RIGHT'},
@@ -107,7 +107,7 @@ touchControls.forEach(control => {
     btn.addEventListener('touchend', (e) => { e.preventDefault(); keyboard[control.key] = false; });
 });
 
-// Event-Listener für Orientierung und Fenstergröße
+// Orientation and window resize event listeners
 window.addEventListener('resize', checkOrientation);
 window.addEventListener('orientationchange', checkOrientation);
 window.addEventListener('load', checkOrientation);
