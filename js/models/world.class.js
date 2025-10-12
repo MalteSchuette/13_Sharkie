@@ -26,12 +26,13 @@ class World {
         this.draw();
     }
 
-    setWorld(){
+    setWorld() {
         this.character.world = this;
-        this.level.enemies.forEach( (enemy) =>{
+        this.level.enemies.forEach((enemy) => {
             enemy.world = this;
         })
         this.character.animate();
+        this.character.movement();
     }
 
     run() {
@@ -45,15 +46,15 @@ class World {
                         this.triggerGameOver();
                     }, 500);
                 }
-                const boss = this.level.enemies[this.level.enemies.length -1];
+                const boss = this.level.enemies[this.level.enemies.length - 1];
                 if (boss && boss.dead && !this.victoryTriggered) {
-                    this.victoryTriggered = true; 
+                    this.victoryTriggered = true;
                     this.triggerVictory();
                 }
             }
         }, 80);
     }
-    
+
     reset() {
         clearInterval(this.runInterval);
         document.getElementById('gameOverScreen').style.display = 'none';
@@ -64,7 +65,6 @@ class World {
         this.bubbles = [];
         this.gameOver = false;
     }
-    
 
     triggerVictory() {
         this.gameOver = true;
@@ -74,7 +74,6 @@ class World {
         const overlay = document.getElementById('victoryScreen');
         overlay.style.display = 'flex';
     }
-
 
     checkCollisions() {
         this.level.enemies.forEach(enemy => {
@@ -108,30 +107,30 @@ class World {
     }
 
     checkBubbleAttack() {
-    if (this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead && !this.isAttacking) {
-        this.isAttacking = true;
-        this.character.status = "attack";
-        this.character.currentImage = 0;
-
-        setTimeout(() => {
-            if (this.character.poison_percentage > 0 && !this.character.dead) {
-                sfx.attack.currentTime = 0;
-                sfx.attack.play();
-
-                const bubble = new Bubble(this.character.x, this.character.y, this.character.otherDirection);
-                this.character.poison_percentage -= 20;
-                this.poisonBar.setPercentage(this.character.poison_percentage);
-                this.bubbles.push(bubble);
-            }
-        }, 500);
-
-        setTimeout(() => {
-            this.character.status = "idle";
+        if (this.keyboard.SPACE && this.character.poison_percentage > 0 && !this.character.dead && !this.isAttacking) {
+            this.isAttacking = true;
+            this.character.status = "attack";
             this.character.currentImage = 0;
-            this.isAttacking = false;
-        }, 700);
+
+            setTimeout(() => {
+                if (this.character.poison_percentage > 0 && !this.character.dead) {
+                    sfx.attack.currentTime = 0;
+                    sfx.attack.play();
+
+                    const bubble = new Bubble(this.character.x, this.character.y, this.character.otherDirection);
+                    this.character.poison_percentage -= 20;
+                    this.poisonBar.setPercentage(this.character.poison_percentage);
+                    this.bubbles.push(bubble);
+                }
+            }, 500);
+
+            setTimeout(() => {
+                this.character.status = "idle";
+                this.character.currentImage = 0;
+                this.isAttacking = false;
+            }, 700);
+        }
     }
-}
 
     recoverPoison() {
         setInterval(() => {
@@ -143,11 +142,7 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.camera_x, 0);
-
         this.addArrayToMap(this.level.backgroundObjects);
-        
-
-        
         this.addArrayToMap(this.level.enemies);
         this.addToMap(this.character);
         this.addArrayToMap(this.level.collectables);
@@ -157,17 +152,14 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.poisonBar);
         this.ctx.translate(this.camera_x, 0);
-        
         this.ctx.translate(-this.camera_x, 0);
-
-
-         self = this;
-        requestAnimationFrame(function() {
+        self = this;
+        requestAnimationFrame(function () {
             self.draw();
         });
     }
 
-    addArrayToMap(element){
+    addArrayToMap(element) {
         element.forEach(e => {
             this.addToMap(e);
         });
@@ -179,8 +171,6 @@ class World {
         }
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
-
-
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
@@ -191,7 +181,7 @@ class World {
         this.ctx.translate(mo.x + mo.width, mo.y);
         this.ctx.scale(-1, 1);
         this.ctx.translate(-mo.x, -mo.y);
-}
+    }
 
     flipImageBack(mo) {
         this.ctx.restore();

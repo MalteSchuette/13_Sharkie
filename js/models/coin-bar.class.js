@@ -1,5 +1,4 @@
 class CoinBar extends StatusBar {
-
     
     constructor() {
         super([

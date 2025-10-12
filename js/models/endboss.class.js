@@ -2,13 +2,14 @@ class Endboss extends MoveableObject {
 
     height = 608;
     width = 570;
-    offset = { top: 280, right:30, bottom:125, left:30 };
-
+    offset = { top: 280, right: 30, bottom: 125, left: 30 };
     movement_trigger = false;
     hit_counter = 0;
     dead = false;
     deathAnimationFinished = false;
     img_counter = 0;
+    frame = 0;
+    hurtFrame = 0;
 
     state = 'idle';
 
@@ -54,88 +55,96 @@ class Endboss extends MoveableObject {
         'assets/img/2.Enemy/3 Final_Enemy/Dead/3.png',
         'assets/img/2.Enemy/3 Final_Enemy/Dead/4.png',
         'assets/img/2.Enemy/3 Final_Enemy/Dead/5.png',
-        'assets/img/2.Enemy/3 Final_Enemy/Dead/6.png'  
+        'assets/img/2.Enemy/3 Final_Enemy/Dead/6.png'
     ]
 
-    constructor(){
+    constructor() {
         super().loadImage('assets/img/2.Enemy/3 Final_Enemy/1.Introduce/1.png');
         this.loadImages(this.IMAGES_INTRO);
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-
-        this.x = 720*5;
+        this.x = 720 * 6;
         this.y = -100;
-
         this.animate();
         this.movement();
         this.checkHitCounter();
     }
 
     animate() {
-        let frame = 0;
-        let hurtFrame = 0;
-
         setInterval(() => {
-
             if (this.dead) {
                 this.state = 'dead';
             }
-
             if (this.state === 'dead') {
-                if (!this.deathAnimationFinished) {
-                    this.playAnimation(this.IMAGES_DEAD);
-                    this.img_counter++;
-                    if (this.img_counter >= this.IMAGES_DEAD.length) {
-                        this.deathAnimationFinished = true;
-                    }
-                } else {
-                    this.playAnimation([this.IMAGES_DEAD[5]]);
-                }
+                this.animateDead();
             }
             else if (this.state === 'intro') {
-                if (frame < this.IMAGES_INTRO.length) {
-                    this.playAnimation([this.IMAGES_INTRO[frame]]);
-                    frame++;
-                } else {
-                    this.state = 'swim';
-                    frame = 0;
-                }
+                let frame = 0;
+                this.animateIntro()
             }
             else if (this.state === 'hurt') {
-                if (hurtFrame < this.IMAGES_HURT.length) {
-                    this.playAnimation([this.IMAGES_HURT[hurtFrame]]);
-                    hurtFrame++;
-                } else {
-                    this.state = 'swim';
-                    hurtFrame = 0;
-                }
+                this.animateHurt();
             }
             else if (this.state === 'swim') {
                 this.playAnimation(this.IMAGES_SWIM);
             }
+            if (world.character.x >= 3500 && this.state === 'idle') {
+                this.startEndboss();
+            }
+        }, 120);
+    }
 
-            if (world.character.x >= 2500 && this.state === 'idle') {
-                this.state = 'intro';
-                this.x = world.character.x + 500;
+    animateDead() {
+        if (!this.deathAnimationFinished) {
+            this.playAnimation(this.IMAGES_DEAD);
+            this.img_counter++;
+            if (this.img_counter >= this.IMAGES_DEAD.length) {
+                this.deathAnimationFinished = true;
+            }
+        } else {
+            this.playAnimation([this.IMAGES_DEAD[5]]);
+        }
+    }
+
+    animateIntro() {
+        if (this.frame < this.IMAGES_INTRO.length) {
+            this.playAnimation([this.IMAGES_INTRO[this.frame]]);
+            this.frame++;
+        } else {
+            this.state = 'swim';
+            this.frame = 0;
+        }
+    }
+
+    animateHurt() {
+        if (this.hurtFrame < this.IMAGES_HURT.length) {
+                    this.playAnimation([this.IMAGES_HURT[this.hurtFrame]]);
+                    this.hurtFrame++;
+                } else {
+                    this.state = 'swim';
+                    this.hurtFrame = 0;
+                }
+    }
+
+    startEndboss() {
+        this.state = 'intro';
+                this.x = world.character.x + 480;
                 this.y = -100;
                 sfx.endboss.currentTime = 0;
                 sfx.endboss.play();
-            }
-
-        }, 120);
     }
 
     movement() {
         setInterval(() => {
             if (world.character.x > 2400) this.movement_trigger = true;
-            if (this.movement_trigger && !this.dead){
+            if (this.movement_trigger && !this.dead) {
                 this.x -= 4 * Math.random();
                 let distance_y = world.character.y - this.y - 450;
                 if (distance_y < this.y) this.y -= 5;
                 else if (distance_y > this.y) this.y += 5;
             }
-        },1000 / 60);
+        }, 1000 / 60);
     }
 
     checkHitCounter() {
@@ -147,6 +156,6 @@ class Endboss extends MoveableObject {
                 this.hit_status = false;
                 this.state = 'hurt';
             }
-        },100);
+        }, 100);
     }
 }

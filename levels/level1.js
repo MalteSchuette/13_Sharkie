@@ -108,13 +108,18 @@ function initLevel() {
             new BackgroundObject('assets/img/3. Background/Layers/5. Water/D2.png', 720*5),
             new BackgroundObject('assets/img/3. Background/Layers/4.Fondo 2/D2.png', 720*5),    
             new BackgroundObject('assets/img/3. Background/Layers/3.Fondo 1/D2.png', 720*5),
-            new BackgroundObject('assets/img/3. Background/Layers/2. Floor/D2.png', 720*5)
+            new BackgroundObject('assets/img/3. Background/Layers/2. Floor/D2.png', 720*5),
+            new BackgroundObject('assets/img/3. Background/Layers/2. Floor/D2.png', 720*3),
+            new BackgroundObject('assets/img/3. Background/Layers/5. Water/D1.png', 720*6),
+            new BackgroundObject('assets/img/3. Background/Layers/4.Fondo 2/D1.png', 720*6),    
+            new BackgroundObject('assets/img/3. Background/Layers/3.Fondo 1/D1.png', 720*6),
+            new BackgroundObject('assets/img/3. Background/Layers/2. Floor/D1.png', 720*6)
         ],
         [
         new Coin(900, 400),
         new Coin(1280, 50),
         new Coin(1600, 350),
-        new Coin(2380, 150),
+        new Coin(2580, 400),
         new Coin(2200, 8)
         ]
     );

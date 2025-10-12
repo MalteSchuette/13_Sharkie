@@ -1,7 +1,7 @@
 class Level {
     enemies;
     backgroundObjects;
-    level_end_x = 720*5
+    level_end_x = 720*6
     collectables;
 
     constructor(enemies, backgroundObjects, collectables){

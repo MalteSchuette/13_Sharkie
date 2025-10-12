@@ -28,7 +28,7 @@
   <script src="js/models/level.class.js"></script>
   <script src="js/models/coin.class.js"></script>
   <script src="js/models/endboss.class.js"></script>
-  <script src="js/game.js"></script>
+  <script src="js/game.js" defer></script>
 </head>
 
 <body onload="preloadGame()">
@@ -67,6 +67,19 @@
       <button onclick="location.reload()">
         <img src="./assets/img/button_main_menu.png" alt="Main Menu Button">
       </button>
+    </div>
+    <div class="mobile_overlay">
+      <div id="left_right_button">
+        <button id="btn_left"> <img src="./assets/img/6.Botones/Key/left_key.png" alt="Button Left"></button>
+        <button id="btn_right"> <img src="./assets/img/6.Botones/Key/right_key.png" alt="Button Right"></button>
+      </div>
+      <div id="attack_button">
+        <button id="btn_att"> <img src="./assets/img/6.Botones/Key/space_key.png" alt="Button Up"></button>
+      </div>
+      <div id="up_down_button">
+        <button id="btn_up"> <img src="./assets/img/6.Botones/Key/up_key.png" alt="Button Up"></button>
+        <button id="btn_down"> <img src="./assets/img/6.Botones/Key/down_key.png" alt="Button Down"></button>
+      </div> 
     </div>
   </div>
 </body>

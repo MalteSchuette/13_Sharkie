@@ -10,8 +10,6 @@ class PufferFish extends MoveableObject {
     }
     hit_status = false;
     
-
-
     constructor() {
         super();
         this.movement();
