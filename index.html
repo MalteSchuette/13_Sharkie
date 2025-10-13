@@ -35,7 +35,7 @@
 </head>
 
 <body onload="preloadGame()">
-  <div class="game-container">
+  <div class="game-container" id="game-container">
     <div id="rotate-screen">
       <p>Bitte drehe dein Gerät, um zu spielen.</p>
     </div>
@@ -47,18 +47,33 @@
       <button onclick="restartGame(), world.start(), removeStartScreen()">
         <img src="./assets/img/6.Botones/Start/4.png" alt="">
       </button>
-      <button onclick="toggleDnone()">
+      <button onclick="toggleDnone('controls_img')">
         <img src="./assets/img/6.Botones/controls_button.png" alt="">
       </button>
-      <img id="controls_img" class="d_none" onclick="toggleDnone()" src="./assets/img/6.Botones/Instructions 2.png"
-        alt="">
+      <img id="controls_img" class="d_none" onclick="toggleDnone('controls_img')" src="./assets/img/6.Botones/Instructions 2.png" alt="Button für Controls">
+      <button id="button_impressum" onclick="toggleDnone('text_impressum')">Impressum</button>
+      <div id="text_impressum" class="d_none" onclick="toggleDnone('text_impressum')">
+        <h2>Impressum</h2>
+
+        <p>Angaben gemäß § 5 TMG:</p>
+        <p>Malte Schütte</p>
+        <p>Werderstr. 43</p>
+        <p>15569 Woltersdorf</p>
+        <p>Deutschland</p>
+
+        <p>Kontakt:</p>
+        <p>E-Mail: malte.schuette92@gmail.com</p>
+
+        <p>Hinweis:</p>
+        <p>Diese Webseite dient ausschließlich zu nicht-kommerziellen Zwecken und präsentiert ein Spiel, das im Rahmen eines Bewerbungsportfolios erstellt wurde.</p>
+      </div>
     </div>
     <div id="gameOverScreen">
       <img id="lose_screen" src="assets/img/6.Botones/Tittles/Game Over/Recurso 10.png" alt="You Lose">
       <button onclick="restartGame()">
         <img src="./assets/img/6.Botones/Try again/Recurso 18.png" alt="Restart Button">
       </button>
-      <button onclick="location.reload()">
+      <button onclick="getMainMenu()">
         <img src="./assets/img/button_main_menu.png" alt="Main Menu Button">
       </button>
     </div>
@@ -67,7 +82,7 @@
       <button onclick="restartGame()">
         <img src="./assets/img/6.Botones/button_play_again.png" alt="Restart Button">
       </button>
-      <button onclick="location.reload()">
+      <button onclick="getMainMenu()">
         <img src="./assets/img/button_main_menu.png" alt="Main Menu Button">
       </button>
     </div>

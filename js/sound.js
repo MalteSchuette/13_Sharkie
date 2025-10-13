@@ -8,7 +8,7 @@ const sfx = {
     endboss_dead: new Audio('audio/endboss_dead.mp3'),
     hurt: new Audio('audio/hurt.mp3'),
     win: new Audio('audio/win_sound.mp3'),
-    lost: new Audio('audio/sound_game_over.mp3')
+    lost: new Audio('audio/sound_game_over.mp3'),
 };
 
 /** Background soundtrack that loops continuously */
@@ -56,7 +56,7 @@ function toggleMute() {
     localStorage.setItem('isMuted', JSON.stringify(isMuted));
     applyMuteState();
 
-    const canvas = document.getElementById('canvas'); // ID deines Canvas
+    const canvas = document.getElementById('canvas');
     if (canvas) canvas.focus();
 }
 

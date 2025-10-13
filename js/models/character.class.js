@@ -58,6 +58,55 @@ class Character extends MoveableObject {
     deathAnimationPlayed;
 
     /**
+     * General counter for when the last action took place to activate long idle animation.
+     * @type {number}
+     */
+    lastActionDate;
+    longIdleCheck;
+
+    /**
+     * Array of image paths for idle animation.
+     * @type {string[]}
+     */
+    IMAGES_IDLE = [
+        'assets/img/1.Sharkie/1.IDLE/1.png',
+        'assets/img/1.Sharkie/1.IDLE/2.png',
+        'assets/img/1.Sharkie/1.IDLE/3.png',
+        'assets/img/1.Sharkie/1.IDLE/4.png',
+        'assets/img/1.Sharkie/1.IDLE/5.png',
+        'assets/img/1.Sharkie/1.IDLE/6.png',
+        'assets/img/1.Sharkie/1.IDLE/7.png',
+        'assets/img/1.Sharkie/1.IDLE/8.png',
+        'assets/img/1.Sharkie/1.IDLE/9.png',
+        'assets/img/1.Sharkie/1.IDLE/10.png',
+        'assets/img/1.Sharkie/1.IDLE/11.png',
+        'assets/img/1.Sharkie/1.IDLE/12.png',
+        'assets/img/1.Sharkie/1.IDLE/13.png',
+        'assets/img/1.Sharkie/1.IDLE/14.png',
+        'assets/img/1.Sharkie/1.IDLE/15.png',
+        'assets/img/1.Sharkie/1.IDLE/16.png',
+        'assets/img/1.Sharkie/1.IDLE/17.png',
+        'assets/img/1.Sharkie/1.IDLE/18.png'
+    ];
+
+    IMAGES_LONG_IDLE = [
+        'assets/img/1.Sharkie/2.Long_IDLE/i1.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i2.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i3.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i4.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i5.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i6.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i7.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i8.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i9.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i10.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i11.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i12.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i13.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/i14.png'
+    ]
+
+    /**
      * Array of image paths for swimming animation.
      * @type {string[]}
      */
@@ -130,7 +179,11 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_HURT_POISON);
         this.loadImages(this.IMAGES_DEAD_POISON);
+        this.loadImages(this.IMAGES_LONG_IDLE)
+        this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_ATTACK);
+        this.lastActionDate = new Date().getTime();
+        this.checkLongIdle()
         this.x = 0;
         this.y = 150;
     }
@@ -140,11 +193,14 @@ class Character extends MoveableObject {
      */
     animate() {
         setInterval(() => {
+            this.longIdleCheck = new Date().getTime() - this.lastActionDate;
+            
             if (this.isDead()) {
                 this.status = "dead";
                 this.dead = true;
                 this.deathAnimation();
-            } else if (this.status === "attack") {
+            } 
+             else if (this.status === "attack") {
                 this.playAnimation(this.IMAGES_ATTACK);
                 if (this.currentImage >= this.IMAGES_ATTACK.length) {
                     this.status = "idle";
@@ -156,10 +212,25 @@ class Character extends MoveableObject {
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 this.status = "swim";
                 this.playAnimation(this.IMAGES_SWIM);
+            }
+            else if (this.status === "idle") {
+                this.playAnimation(this.IMAGES_IDLE)
+            }
+            else if (this.status === "longIdle") {
+                this.playAnimation(this.IMAGES_LONG_IDLE)
             } else {
                 this.status = "idle";
-                this.loadImage('assets/img/1.Sharkie/1.IDLE/1.png');
             }
+        }, 80);
+    }
+
+    checkLongIdle() {
+        setInterval(() => {
+            this.longIdleCheck = new Date().getTime() - this.lastActionDate;
+            if(this.longIdleCheck > 3000 && this.status === "idle") {
+                this.status = "longIdle"
+            }
+            
         }, 80);
     }
 
@@ -171,16 +242,20 @@ class Character extends MoveableObject {
             if (this.world.keyboard.RIGHT && this.x < level1.level_end_x && !this.dead) {
                 this.x += 10;
                 this.otherDirection = false;
+                this.lastActionDate = new Date().getTime();
             }
             if (this.world.keyboard.LEFT && this.x > -100 && !this.dead) {
                 this.x -= 10;
                 this.otherDirection = true;
+                this.lastActionDate = new Date().getTime();
             }
             if (this.world.keyboard.DOWN && this.y < 360 && !this.dead) {
                 this.y += 10;
+                this.lastActionDate = new Date().getTime();
             }
             if (this.world.keyboard.UP && this.y > -70 && !this.dead) {
                 this.y -= 10;
+                this.lastActionDate = new Date().getTime();
             }
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);

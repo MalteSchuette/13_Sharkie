@@ -104,7 +104,6 @@ class DrawableObject {
      */
     drawFrame(ctx) {
         this.getRealFrame();
-        // Uncomment below for debugging hitboxes
         // ctx.beginPath();
         // ctx.lineWidth = '5';
         // ctx.strokeStyle = 'red';

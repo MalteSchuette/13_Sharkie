@@ -13,6 +13,7 @@ let keyboard = new Keyboard();
 function preloadGame() {
     canvas = document.getElementById("canvas");
     initLevel();
+    applyMuteState()
     world = new World(canvas, keyboard);
 }
 
@@ -29,11 +30,18 @@ function removeStartScreen() {
     }
 }
 
+function getMainMenu() {
+    const startScreen = document.getElementById("start_screen")
+    startScreen.classList.remove("d_none")
+    document.getElementById("gameOverScreen").style.display = 'none'
+    document.getElementById("victoryScreen").style.display = 'none'
+}
+
 /**
  * Toggles visibility of the controls image.
  */
-function toggleDnone() {
-    document.getElementById("controls_img").classList.toggle("d_none")
+function toggleDnone(id) {
+    document.getElementById(id).classList.toggle("d_none")
 }
 
 /**
@@ -72,10 +80,15 @@ window.addEventListener('load', () => {
     if (isMobileDevice()) {
         document.body.style.backgroundImage = 'none';
         document.body.style.backgroundColor = '#000';
+        document.getElementById("game-container").style.maxWidth = '4000px';
+        document.getElementById("game-container").style.maxHeight = '4000px';
     }
 });
 
-// Keyboard event listeners
+
+/**
+ * detects if a key got pressed. 
+ */
 window.addEventListener('keydown', (e) => {
     if (e.keyCode == 37 || e.keyCode == 65) keyboard.LEFT = true;
     if (e.keyCode == 38 || e.keyCode == 87) keyboard.UP = true;
@@ -84,6 +97,10 @@ window.addEventListener('keydown', (e) => {
     if (e.keyCode == 32) keyboard.SPACE = true;
 });
 
+
+/**
+ * detects if a key got released.
+ */
 window.addEventListener('keyup', (e) => {
     if (e.keyCode == 37 || e.keyCode == 65) keyboard.LEFT = false;
     if (e.keyCode == 38 || e.keyCode == 87) keyboard.UP = false;
@@ -92,7 +109,9 @@ window.addEventListener('keyup', (e) => {
     if (e.keyCode == 32) keyboard.SPACE = false;
 });
 
-// Touch controls event listeners
+/**
+ * connectes button id's with keys for controls.
+ */
 const touchControls = [
     {id: 'btn_left', key: 'LEFT'},
     {id: 'btn_right', key: 'RIGHT'},
@@ -101,13 +120,19 @@ const touchControls = [
     {id: 'btn_att', key: 'SPACE'}
 ];
 
+
+/**
+ * detects if a button for touch control got pressed/released.
+ */
 touchControls.forEach(control => {
     const btn = document.getElementById(control.id);
     btn.addEventListener('touchstart', (e) => { e.preventDefault(); keyboard[control.key] = true; });
     btn.addEventListener('touchend', (e) => { e.preventDefault(); keyboard[control.key] = false; });
 });
 
-// Orientation and window resize event listeners
+/**
+ * checks orientation / resizes to check if device is mobile or desktop. 
+ */
 window.addEventListener('resize', checkOrientation);
 window.addEventListener('orientationchange', checkOrientation);
 window.addEventListener('load', checkOrientation);

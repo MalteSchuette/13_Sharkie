@@ -137,7 +137,7 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = 720 * 6;
+        this.x = -9999;
         this.y = -100;
         this.animate();
         this.movement();
@@ -224,7 +224,7 @@ class Endboss extends MoveableObject {
      */
     movement() {
         setInterval(() => {
-            if (world.character.x > 2400) this.movement_trigger = true;
+            if (world.character.x > 3400) this.movement_trigger = true;
             if (this.movement_trigger && !this.dead) {
                 this.x -= 4 * Math.random();
                 let distance_y = world.character.y - this.y - 450;

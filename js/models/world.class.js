@@ -133,7 +133,6 @@ class World {
             sfx.hurt.play();
             this.lifeBar.setPercentage(this.character.energy);
         }
-
             for (let i = this.bubbles.length - 1; i >= 0; i--) {
                 const bubble = this.bubbles[i];
                 if (!bubble) continue;
