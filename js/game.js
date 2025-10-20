@@ -30,6 +30,9 @@ function removeStartScreen() {
     }
 }
 
+/**
+ * showes the start screen.
+ */
 function getMainMenu() {
     const startScreen = document.getElementById("start_screen")
     startScreen.classList.remove("d_none")

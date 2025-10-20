@@ -89,21 +89,26 @@ class Character extends MoveableObject {
         'assets/img/1.Sharkie/1.IDLE/18.png'
     ];
 
+
+    /**
+     * Array of image paths for long idle animation.
+     * @type {string[]}
+     */
     IMAGES_LONG_IDLE = [
         'assets/img/1.Sharkie/2.Long_IDLE/i1.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i2.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i3.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i4.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i5.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i6.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i7.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i8.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i9.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i10.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i11.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i12.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i13.png',
-        'assets/img/1.Sharkie/2.Long_IDLE/i14.png'
+        'assets/img/1.Sharkie/2.Long_IDLE/I2.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I3.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I4.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I5.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I6.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I7.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I8.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I9.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I10.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I11.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I12.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I13.png',
+        'assets/img/1.Sharkie/2.Long_IDLE/I14.png'
     ]
 
     /**
@@ -196,22 +201,14 @@ class Character extends MoveableObject {
             this.longIdleCheck = new Date().getTime() - this.lastActionDate;
             
             if (this.isDead()) {
-                this.status = "dead";
-                this.dead = true;
-                this.deathAnimation();
+                this.playDeathAnimation()
             } 
              else if (this.status === "attack") {
-                this.playAnimation(this.IMAGES_ATTACK);
-                if (this.currentImage >= this.IMAGES_ATTACK.length) {
-                    this.status = "idle";
-                    this.currentImage = 0;
-                }
+                this.playAttackAnimation();
             } else if (this.isHurt()) {
-                this.status = "hurt";
-                this.playAnimation(this.IMAGES_HURT_POISON);
+                this.playHurtAnimation();
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.status = "swim";
-                this.playAnimation(this.IMAGES_SWIM);
+                this.playSwimAnimation();
             }
             else if (this.status === "idle") {
                 this.playAnimation(this.IMAGES_IDLE)
@@ -224,6 +221,33 @@ class Character extends MoveableObject {
         }, 80);
     }
 
+    playDeathAnimation() {
+        this.status = "dead";
+        this.dead = true;
+        this.deathAnimation();
+    }
+
+    playAttackAnimation() {
+        this.playAnimation(this.IMAGES_ATTACK);
+        if (this.currentImage >= this.IMAGES_ATTACK.length) {
+            this.status = "idle";
+            this.currentImage = 0;
+        }
+    }
+
+    playHurtAnimation() {
+        this.status = "hurt";
+        this.playAnimation(this.IMAGES_HURT_POISON);
+    }
+
+    playSwimAnimation() {
+        this.status = "swim";
+        this.playAnimation(this.IMAGES_SWIM);
+    }
+
+    /**
+     * checks timing of last action to set the character in the long idle status.
+     */
     checkLongIdle() {
         setInterval(() => {
             this.longIdleCheck = new Date().getTime() - this.lastActionDate;

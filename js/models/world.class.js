@@ -133,7 +133,14 @@ class World {
             sfx.hurt.play();
             this.lifeBar.setPercentage(this.character.energy);
         }
-            for (let i = this.bubbles.length - 1; i >= 0; i--) {
+            this.checkBubbleCollision(enemy);
+        });
+            this.checkCollectableCollision();
+    }
+
+    /** Checks collisions between bubble and enemies. */
+    checkBubbleCollision(enemy) {
+        for (let i = this.bubbles.length - 1; i >= 0; i--) {
                 const bubble = this.bubbles[i];
                 if (!bubble) continue;
                 if (bubble.isColliding(enemy)) {
@@ -143,7 +150,10 @@ class World {
                     break;
                 }
             }
-        });
+    }
+
+    /** Checks collisions between char and collectables. */
+    checkCollectableCollision() {
         for (let i = this.level.collectables.length - 1; i >= 0; i--) {
             const collectable = this.level.collectables[i];
             if (this.character.isColliding(collectable)) {
@@ -164,15 +174,7 @@ class World {
             this.character.currentImage = 0;
 
             setTimeout(() => {
-                if (this.character.poison_percentage > 0 && !this.character.dead) {
-                    sfx.attack.currentTime = 0;
-                    sfx.attack.play();
-
-                    const bubble = new Bubble(this.character.x, this.character.y, this.character.otherDirection);
-                    this.character.poison_percentage -= 20;
-                    this.poisonBar.setPercentage(this.character.poison_percentage);
-                    this.bubbles.push(bubble);
-                }
+                this.generateBubbleAttack()
             }, 500);
 
             setTimeout(() => {
@@ -181,6 +183,18 @@ class World {
                 this.isAttacking = false;
             }, 700);
         }
+    }
+
+    generateBubbleAttack() {
+        if (this.character.poison_percentage > 0 && !this.character.dead) {
+                    sfx.attack.currentTime = 0;
+                    sfx.attack.play();
+
+                    const bubble = new Bubble(this.character.x, this.character.y, this.character.otherDirection);
+                    this.character.poison_percentage -= 20;
+                    this.poisonBar.setPercentage(this.character.poison_percentage);
+                    this.bubbles.push(bubble);
+                }
     }
 
     /** Regenerates character's poison over time. */
