@@ -2,8 +2,6 @@
 
 A 2D underwater action game built with pure HTML5, CSS3, and JavaScript. You play as Sharkie — a shark navigating the ocean, fighting off puffer fish and jellyfish, collecting coins, and taking down a final boss.
 
-**[Play the game](https://malteschuette.github.io/13_Sharkie/)**
-
 ---
 
 ## Gameplay
